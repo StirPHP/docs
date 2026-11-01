@@ -46,6 +46,6 @@ reads it, so a project can move over one file at a time. See
 
 StirPHP is young. The language, checker, compiler and language server work end
 to end (Parsedown has been ported to it, with its test suite passing), but
-there are no prebuilt releases yet and the language may still change.
+the language may still change before 1.0.
 
 Next: [Installation](./installation).

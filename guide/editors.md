@@ -18,16 +18,16 @@ It provides:
 
 ## VS Code
 
-The extension is in [`editors/vscode`](https://github.com/StirPHP/core/tree/main/editors/vscode)
-of the core repository. It registers `.sphp` files, highlights them and starts
-`sphp lsp`. Until it is on the Marketplace, build and install it:
+The extension registers `.sphp` files, highlights them and starts `sphp lsp`.
+Until it is on the Marketplace, download `stirphp-vscode-<version>.vsix` from a
+[release](https://github.com/StirPHP/core/releases) and install it:
 
 ```sh
-cd editors/vscode
-npm install
-npm run package
-code --install-extension stirphp-0.1.0.vsix
+code --install-extension stirphp-vscode-0.1.0.vsix
 ```
+
+Its source is in [`editors/vscode`](https://github.com/StirPHP/core/tree/main/editors/vscode)
+of the core repository.
 
 | Setting | Default | |
 |---|---|---|
