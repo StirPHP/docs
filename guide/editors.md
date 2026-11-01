@@ -29,11 +29,20 @@ code --install-extension stirphp-vscode-0.1.0.vsix
 Its source is in [`editors/vscode`](https://github.com/StirPHP/core/tree/main/editors/vscode)
 of the core repository.
 
+The extension downloads `sphp` by itself: on first start it fetches the build
+for your platform from the releases (verified against `SHA256SUMS`), and every
+few hours it installs newer builds, offering to restart the server. Set
+`sphp.server.path` to use your own `sphp` instead.
+
 | Setting | Default | |
 |---|---|---|
-| `sphp.server.path` | `sphp` | The binary, started as `sphp lsp` |
+| `sphp.server.path` | (empty) | The `sphp` to run instead of the downloaded one |
+| `sphp.server.channel` | `stable` | Download releases, or `nightly` builds |
+| `sphp.server.autoUpdate` | `true` | Install newer builds of the channel |
 | `sphp.php.enable` | `false` | Also serve `.php` files |
 | `sphp.trace.server` | `off` | Log LSP traffic |
+
+**StirPHP: Check for Updates** checks at any time.
 
 ## Neovim
 
