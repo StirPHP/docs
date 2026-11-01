@@ -105,6 +105,20 @@ function describe(?\Shop\Payment $p): string
 
 :::
 
+## Install
+
+::: code-group
+
+```sh [Linux and macOS]
+curl -fsSL https://stirphp.github.io/core/install.sh | sh
+```
+
+```powershell [Windows]
+irm https://stirphp.github.io/core/install.ps1 | iex
+```
+
+:::
+
 ## Three commands
 
 <div class="steps">
@@ -117,4 +131,4 @@ function describe(?\Shop\Payment $p): string
 
 </div>
 
-[Install StirPHP →](/guide/installation)
+[More ways to install →](/guide/installation)

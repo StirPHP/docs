@@ -1,5 +1,7 @@
 # Your first project
 
+This assumes `sphp` is [installed](./installation).
+
 ## Create it
 
 ```sh

@@ -4,6 +4,15 @@ The website of [StirPHP](https://github.com/StirPHP/core): the guide and an
 in-browser playground, built with [VitePress](https://vitepress.dev). It is
 published at https://stirphp.github.io/docs/.
 
+To install StirPHP itself:
+
+```sh
+curl -fsSL https://stirphp.github.io/core/install.sh | sh     # Linux and macOS
+irm https://stirphp.github.io/core/install.ps1 | iex          # Windows (PowerShell)
+```
+
+The rest of this file is about working on the site.
+
 ```sh
 npm install
 npm run dev        # http://localhost:5173/docs/
