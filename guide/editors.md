@@ -23,7 +23,7 @@ Until it is on the Marketplace, download `stirphp-vscode-<version>.vsix` from a
 [release](https://github.com/StirPHP/core/releases) and install it:
 
 ```sh
-code --install-extension stirphp-vscode-0.1.0.vsix
+code --install-extension stirphp-vscode-0.1.1.vsix
 ```
 
 Its source is in [`editors/vscode`](https://github.com/StirPHP/core/tree/main/editors/vscode)

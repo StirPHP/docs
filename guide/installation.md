@@ -19,11 +19,15 @@ distribution, whatever its glibc.
 On Linux or macOS:
 
 ```sh
-curl -fsSL https://github.com/StirPHP/core/releases/latest/download/sphp-0.1.0-x86_64-unknown-linux-musl.tar.gz \
+curl -fsSL https://github.com/StirPHP/core/releases/latest/download/sphp-x86_64-unknown-linux-musl.tar.gz \
   | tar -xz
-sudo mv sphp-0.1.0-x86_64-unknown-linux-musl/sphp /usr/local/bin/
+sudo mv sphp-*-x86_64-unknown-linux-musl/sphp /usr/local/bin/
 sphp --version
 ```
+
+Replace the target with your platform's from the table. Every release also
+has these version-less names, so the `latest/download` links always get the
+newest release.
 
 On Windows, unpack the `.zip` and put `sphp.exe` in a directory on your
 `PATH`.
