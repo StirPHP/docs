@@ -9,8 +9,9 @@ export default defineConfig({
   title: 'StirPHP',
   description: 'A strictly typed superset of PHP that compiles to plain PHP.',
   base,
-  // the repository's README is not a page of the site
-  srcExclude: ['README.md'],
+  // not pages of the site: the repository's README, and the StirPHP core
+  // checkout that CI builds the playground compiler from
+  srcExclude: ['README.md', 'core/**'],
   cleanUrls: false,
   lastUpdated: true,
   head: [
