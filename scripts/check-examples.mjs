@@ -12,10 +12,11 @@
 import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, mkdirSync, statSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join, relative } from 'node:path'
+import { join, relative, resolve } from 'node:path'
 
 const root = new URL('..', import.meta.url).pathname
-const sphp = process.env.SPHP ?? 'sphp'
+// a path (not a bare command name) is relative to where the script is run
+const sphp = process.env.SPHP?.includes('/') ? resolve(process.env.SPHP) : (process.env.SPHP ?? 'sphp')
 
 function markdownFiles(dir) {
   return readdirSync(dir).flatMap((name) => {
@@ -90,7 +91,12 @@ let stdout
 try {
   stdout = execFileSync(sphp, ['check', '--format', 'json'], { cwd: project, encoding: 'utf8' })
 } catch (e) {
-  stdout = e.stdout ?? ''
+  // `sphp check` exits with 1 when it reports errors; anything else is a failure to run it
+  if (e.status !== 1 || !e.stdout) {
+    console.error(`could not run \`${sphp} check\`: ${e.message}`)
+    process.exit(2)
+  }
+  stdout = e.stdout
 }
 const json = stdout.slice(stdout.indexOf('['), stdout.lastIndexOf(']') + 1)
 const diags = json ? JSON.parse(json) : []
