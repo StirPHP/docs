@@ -9,6 +9,8 @@ export default defineConfig({
   title: 'StirPHP',
   description: 'A strictly typed superset of PHP that compiles to plain PHP.',
   base,
+  // the repository's README is not a page of the site
+  srcExclude: ['README.md'],
   cleanUrls: false,
   lastUpdated: true,
   head: [
@@ -81,7 +83,7 @@ export default defineConfig({
       text: 'Edit this page on GitHub',
     },
     footer: {
-      message: 'StirPHP is open source under MIT or Apache-2.0.',
+      message: 'StirPHP is open source under the MIT license.',
       copyright: 'Compiles to plain PHP 8.4.',
     },
   },

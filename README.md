@@ -49,3 +49,7 @@ repository's Pages settings).
 ## Design
 
 The colors are those of the [Raven](https://useraven.org) website.
+
+## License
+
+[MIT](LICENSE).
