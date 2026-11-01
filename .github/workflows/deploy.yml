@@ -1,0 +1,72 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The compiler: for the playground (WebAssembly) and to check the examples.
+      - uses: actions/checkout@v4
+        with:
+          repository: StirPHP/core
+          path: core
+      - name: Fetch the PHP stubs
+        working-directory: core
+        run: git submodule update --init --depth 1 crates/stir_stubs/phpstorm-stubs
+      - name: Rust toolchain
+        working-directory: core
+        run: |
+          rustup show active-toolchain || rustup toolchain install
+          rustup target add wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack@0.15.0
+      - name: Build sphp
+        working-directory: core
+        run: cargo build --release --locked -p stir_cli
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Build the playground compiler
+        run: STIRPHP_CORE=core ./scripts/build-playground.sh
+      - name: Check the examples
+        run: SPHP=core/target/release/sphp npm run check:examples
+      - name: Build the site
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .vitepress/dist
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
