@@ -64,6 +64,9 @@ sphp build [OPTIONS]
 The output mirrors the source tree. Files that a previous build wrote but no
 longer correspond to a source are removed.
 
+With `--force`, a file with syntax errors still isn't written, and the exit
+status is still 1.
+
 ## sphp lsp
 
 Runs the [language server](./editors) over stdin and stdout. Editors start it

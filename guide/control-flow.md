@@ -6,6 +6,8 @@
 
 ```sphp
 function parity(n: Int): String = if (n % 2 == 0) "even" else "odd"
+
+function sign(n: Int): String = if (n > 0) "+" elseif (n < 0) "-" else "0"
 ```
 
 ## when
@@ -66,7 +68,25 @@ function len(x: String | List<Int> | null): Int {
 }
 ```
 
-Assigning to a `var` resets what was learned about it.
+Assigning to a `var` resets what was learned about it. After an `if`, a
+variable has the union of the types of the paths that fall through.
+
+Properties narrow the same way until they are assigned, when written out as
+`$this->name` or `$a->b`. PHP's own checks narrow too, such as `is_string(x)`,
+`isset(x)` and `empty(x)`:
+
+```sphp
+class Profile {
+    var $nickname: String? = null
+
+    function shown(): String {
+        if ($this->nickname != null) {
+            return $this->nickname->uppercase()
+        }
+        return "anonymous"
+    }
+}
+```
 
 ## as
 
@@ -82,3 +102,13 @@ function port(raw: String): Int {
 
 Generic type arguments are not checked at runtime: `as List<Int>` checks that
 the value is a list, not what is in it.
+
+A cast to the type a value already has does nothing, so it is compiled away,
+with a warning:
+
+```sphp
+function again(s: String): String = s as String // warning: SPHP0033
+```
+
+PHP's casts aren't part of `.sphp`: instead of `(int) x`, use `intval(x)`, or
+`x as int` for a checked conversion.

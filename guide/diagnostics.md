@@ -38,7 +38,25 @@ in `.sphp` files they are always reported.
 | `SPHP0030` | missing implementation | A class doesn't implement an abstract member. |
 | `SPHP0031` | incompatible override | An override doesn't match what it overrides, or overrides something final. |
 | `SPHP0032` | data class | A data class breaks its rules (for example a mutable property). |
+| `SPHP0033` | redundant conversion | A conversion does nothing: `as String` on a `String`, `intval()` of an `Int`, or `strval()` of what `.`, `echo` or a template converts anyway (a warning). |
 | `SPHP0050` | PHPDoc mismatch | A PHPDoc type contradicts the native type it annotates (`.php` files). |
+
+## Silencing a diagnostic
+
+For a false positive, a comment silences every diagnostic on a line:
+
+```sphp
+// @sphp-ignore-next-line
+val a: String = 1
+val b: String = 2 // @sphp-ignore
+```
+
+Alone on its line, `@sphp-ignore` applies to the next line; after code, to its
+own. `@sphp-ignore-next-line` and `@sphp-ignore-line` say which explicitly. A
+code written after the comment doesn't narrow it down.
+
+In `.php` files the comments are PHPStan's: `@phpstan-ignore`,
+`@phpstan-ignore-next-line` and `@phpstan-ignore-line`.
 
 ## Machine-readable output
 

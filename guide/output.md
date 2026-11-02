@@ -1,8 +1,10 @@
 # The generated PHP
 
 `sphp build` aims for PHP you would be happy to read and debug. Every file
-starts with `declare(strict_types=1);`, keeps its namespace and `use`s, and
-gets PHPDoc that PHPStan understands where native types can't say enough.
+starts with `declare(strict_types=1);` (unless
+[`strictTypes`](./configuration) is off), keeps its namespace, `use`s, doc
+comments and attributes, and gets PHPDoc that PHPStan understands where native
+types can't say enough.
 
 | StirPHP | PHP |
 |---|---|
@@ -11,15 +13,18 @@ gets PHPDoc that PHPStan understands where native types can't say enough.
 | `x?->name`, `x ?: y` | `$x?->name`, `$x ?? $y` |
 | `x!!` | `$x ?? throw new \TypeError(...)` |
 | `a == b` (StirPHP types) | `$a === $b` |
-| `Int / Int` | `\intdiv($a, $b)` |
+| `a / b` | `$a / $b` |
+| `a->div(b)` | `\Stir\Int_div($a, $b)` |
 | `when` (as a value) | `match` |
 | `x is Point` | `$x instanceof Point`, or `\is_array(...)` checks for records |
-| `{ x -> x * 2 }` | `fn ($x) => $x * 2` |
+| `{ x: Int -> x * 2 }` | `fn (int $x): int => $x * 2` |
 | `record Point { ... }` | an array; `array{x: int, y: int}` in PHPDoc |
 | `data class` | `final readonly class` with promoted properties |
 | `class` (not `open`) | `final class` |
 | `listOf(1, 2)`, `mapOf("a" to 1)` | `[1, 2]`, `['a' => 1]` |
 | `T?`, generics, function types | native types plus `@param`/`@return`/`@template` |
+| `unknown` | `mixed` |
+| `resource` | no native type; `@param resource` in PHPDoc |
 
 ## Extension functions and the runtime
 

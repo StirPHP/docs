@@ -22,7 +22,7 @@ features:
   - title: Null safety
     details: 'String and String? are different types. ?->, ?:, !! and smart casts make every null visible, and untyped PHP values must be narrowed before use.'
   - title: No top type
-    details: 'No mixed, no Any. Generics with bounds and variance are how code accepts "anything", so the type of a value is always known.'
+    details: 'No mixed, no Any. Generics with bounds and variance are how code accepts "anything", and an unknown value can''t be used until it is narrowed.'
   - title: Values that say what they are
     details: 'val has no $ and never changes; var $x does. Records are typed arrays, data classes are immutable objects, sealed hierarchies make when exhaustive.'
   - title: Plain PHP out

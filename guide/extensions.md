@@ -52,7 +52,7 @@ echo long->joinToString(", ")
 | Type | Highlights |
 |---|---|
 | `String` | `length`, `uppercase`, `lowercase`, `trim`, `split`, `lines`, `substring`, `startsWith`, `contains`, `replace`, `matches`, `padStart`, `toIntOrNull`, ... (lengths and indices count Unicode code points) |
-| `Int`, `Float` | `abs`, `coerceIn`, `pow`, `isEven`, `until`, `downTo`, `toFloat`, `roundToInt`, ... |
+| `Int`, `Float` | `abs`, `coerceIn`, `pow`, `div`, `isEven`, `until`, `downTo`, `toFloat`, `roundToInt`, ... |
 | `List<T>` | `map`, `filter`, `fold`, `groupBy`, `associateBy`, `sortedBy`, `firstOrNull`, `sumOf`, `chunked`, `zip`, `joinToString`, ... |
 | `MutableList<T>` | `add`, `addAll`, `removeAt`, `removeLast`, `sort`, `clear`, ... (modify in place) |
 | `Map<K, V>` | `keys`, `values`, `getOrElse`, `filterKeys`, `mapValues`, `toList`, ... |

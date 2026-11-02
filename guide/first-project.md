@@ -9,8 +9,8 @@ mkdir hello && cd hello
 sphp init --yes
 ```
 
-`sphp init` asks for a name and the source and output directories; `--yes`
-takes the defaults. It writes:
+`sphp init` asks for a name, the source and output directories, and whether to
+allow plain `.php` files; `--yes` takes the defaults. It writes:
 
 - `sphp.toml`, the project configuration (see [Configuration](./configuration))
 - `src/main.sphp`, a first program

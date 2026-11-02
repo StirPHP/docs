@@ -49,6 +49,15 @@ var $total = 0
 $totl = 5 // error: SPHP0017
 ```
 
+A `for` loop declares its counter the same way:
+
+```sphp
+var $sum = 0
+for (var $i = 0; $i < 3; $i++) {
+    $sum += $i
+}
+```
+
 ## Types
 
 A binding's type is inferred from its initializer, or written after a colon:

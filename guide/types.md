@@ -37,12 +37,14 @@ PHP functions with native return types (like `strlen`'s `int`) are seen with
 the matching StirPHP type, because PHP enforces them. A PHP type written in
 StirPHP code stays a PHP type.
 
-Arithmetic follows PHP: `/` gives a float unless it divides evenly, and `.`
-concatenates strings and numbers, but not a `Bool` or null:
+Arithmetic follows PHP: `/` gives a float unless it divides evenly, so
+`Int / Int` has the type `Int | Float`; `->div()` truncates and stays an `Int`.
+`.` concatenates strings and numbers, but not a `Bool` or null:
 
 ```sphp
-val half = 7 / 2          // 3.5
-val label = "n=" . half   // "n=3.5"
+val half = 7 / 2            // 3.5
+val whole: Int = 7->div(2)  // 3
+val label = "n=" . half     // "n=3.5"
 val same = "n=${half}"
 val flag = "on: " . true // error: SPHP0015
 ```
@@ -115,6 +117,23 @@ function <T> first(items: List<T>): T? = items->firstOrNull()
 function bad(x: mixed): Unit {} // error: SPHP0003
 ```
 
+## unknown
+
+For a value that really could be anything until you look at it, there is
+`unknown`. Every value fits it, and it generates PHP's `mixed`, but nothing can
+be done with one until it is narrowed (only `isset`, `empty` and `??` may probe
+it):
+
+```sphp
+function size(payload: unknown): Int {
+    if (payload is String) {
+        return payload->length()
+    }
+    echo payload->length() // error: SPHP0015
+    return 0
+}
+```
+
 ## Untyped PHP values: `Any!`
 
 A value from PHP code without type information has the type `Any!`: "unknown,
@@ -132,7 +151,8 @@ function count_items(json: String): Int {
 ```
 
 An `Any!` can't escape into your types: it can't be returned from a function
-without a declared return type, or stored in a property.
+without a declared return type, or stored in a property. To keep one around,
+declare it [`unknown`](#unknown).
 
 Types that PHP code declares only in PHPDoc are *platform types*, written
 `T!`: they are probably `T`, but nothing enforces it at runtime. See

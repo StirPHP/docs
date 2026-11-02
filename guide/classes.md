@@ -48,6 +48,21 @@ When a parameter has the same name as a property, `name` is the parameter and
 Visibility is `public` by default; `private` and `protected` work as in PHP.
 Static members use `static` and are reached with `ClassName::member`.
 
+### Methods
+
+Methods can be called without `$this->` too, if the arguments fit. If they
+don't, a bare call means PHP's global function of that name, which is how a
+`count()` method can use PHP's `count`. `$this->name()` always means the method:
+
+```sphp
+class Cart {
+    private var $items: array<string> = []
+
+    function count(): int = count($items)
+    function isEmpty(): bool = $this->count() === 0
+}
+```
+
 ## Final by default
 
 Classes and their methods are final unless marked `open` (or `abstract`). An
@@ -72,8 +87,10 @@ The superclass and interfaces come after a colon; a superclass is followed by
 its constructor arguments. `abstract` classes and `interface`s work as in PHP.
 
 In the generated PHP, a class that isn't `open` is `final`, and so are its
-methods. An `open` method keeps its parameter types but declares its return
-type in PHPDoc only, so plain PHP subclasses can override it.
+methods. What a subclass can override carries its type in PHPDoc only, so plain
+PHP subclasses can override it without type declarations: the return types of
+`open`, abstract and interface methods, and the types of `var` properties that
+subclasses can see.
 
 ## Data classes
 
