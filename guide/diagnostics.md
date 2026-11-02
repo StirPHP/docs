@@ -20,7 +20,7 @@ in `.sphp` files they are always reported.
 | `SPHP0012` | nullable access | A member of a nullable value is used without `?->`, `!!` or a null check. |
 | `SPHP0013` | incompatible comparison | Two values that can never be equal are compared. |
 | `SPHP0014` | argument count | Too many or too few arguments, or an unknown named argument. |
-| `SPHP0015` | invalid operand | An operator is applied to a type it doesn't support (`.` on an `Int`, member access on `Any!`, ...). |
+| `SPHP0015` | invalid operand | An operator is applied to a type it doesn't support (`.` on a `Bool`, member access on `Any!`, ...). |
 | `SPHP0016` | sigil mismatch | A `val` is written with `$`, or a `var` without it. |
 | `SPHP0017` | undeclared assignment | A variable is assigned without a `var` declaration. |
 | `SPHP0018` | not callable | A value that isn't a function is called. |

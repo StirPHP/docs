@@ -37,13 +37,14 @@ PHP functions with native return types (like `strlen`'s `int`) are seen with
 the matching StirPHP type, because PHP enforces them. A PHP type written in
 StirPHP code stays a PHP type.
 
-Arithmetic follows the types: `Int / Int` is integer division (it truncates,
-like `intdiv`), and `.` only concatenates strings:
+Arithmetic follows PHP: `/` gives a float unless it divides evenly, and `.`
+concatenates strings and numbers, but not a `Bool` or null:
 
 ```sphp
-val half = 7 / 2          // 3
-val label = "n=" . half // error: SPHP0015
-val ok = "n=${half}"
+val half = 7 / 2          // 3.5
+val label = "n=" . half   // "n=3.5"
+val same = "n=${half}"
+val flag = "on: " . true // error: SPHP0015
 ```
 
 ## Comparisons
