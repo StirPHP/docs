@@ -1,0 +1,37 @@
+$ stirphp check
+error[argument.type]: type mismatch in argument `quantity` of `__construct`: '2' is not assignable to int
+    ╭─[ public/index.php:14:46 ]
+    │
+ 14 │ $cart->add(new Item('Cups', new Money(1200), '2'));
+    │                                              ─┬─  
+    │                                               ╰─── type mismatch in argument `quantity` of `__construct`: '2' is not assignable to int
+────╯
+error[argument.type]: type mismatch in argument `customer` of `render`: 42 is not assignable to string
+    ╭─[ public/index.php:19:35 ]
+    │
+ 19 │ echo (new Receipt($cart))->render(42), "\n";
+    │                                   ─┬  
+    │                                    ╰── type mismatch in argument `customer` of `render`: 42 is not assignable to string
+────╯
+error[class.notFound]: unknown type `App\Money`
+    ╭─[ src/Receipt.php:24:33 ]
+    │
+ 24 │     public function shipping(): Money
+    │                                 ──┬──  
+    │                                   ╰──── unknown type `App\Money`
+────╯
+error[class.notFound]: unknown class `Money`
+    ╭─[ src/Receipt.php:26:20 ]
+    │
+ 26 │         return new Money(495);
+    │                    ──┬──  
+    │                      ╰──── unknown class `Money`
+────╯
+error[method.notFound]: `App\Shop\Item` has no method `totl`
+    ╭─[ src/Shop/Cart.php:34:41 ]
+    │
+ 34 │             $total = $total->add($item->totl());
+    │                                         ──┬─  
+    │                                           ╰─── `App\Shop\Item` has no method `totl`
+────╯
+5 errors, 0 warnings in 3 files (checked 5 files)

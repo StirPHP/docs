@@ -1,63 +1,70 @@
 # StirPHP documentation
 
-The website of [StirPHP](https://github.com/StirPHP/core): the guide and an
-in-browser playground, built with [VitePress](https://vitepress.dev). It is
+The website of [StirPHP](https://github.com/StirPHP/core), a language server and type checker for PHP: the guide, the
+diagnostics reference and an editor running StirPHP in the browser, built with [VitePress](https://vitepress.dev). It's
 published at https://stirphp.github.io/docs/.
-
-To install StirPHP itself:
-
-```sh
-curl -fsSL https://stirphp.github.io/core/install.sh | sh     # Linux and macOS
-irm https://stirphp.github.io/core/install.ps1 | iex          # Windows (PowerShell)
-```
 
 The rest of this file is about working on the site.
 
 ```sh
-npm install
+npm ci
 npm run dev        # http://localhost:5173/docs/
 npm run build      # .vitepress/dist
 ```
 
-## The playground
+## The editor
 
-The playground runs the real StirPHP checker and compiler in the browser:
-`crates/stir_wasm` of the core repository, built to WebAssembly, with
-[Monaco](https://microsoft.github.io/monaco-editor/) as the editor. To build
-it locally you need Rust, the `wasm32-unknown-unknown` target and
-[wasm-pack](https://github.com/wasm-bindgen/wasm-pack):
-
-```sh
-STIRPHP_CORE=../core ./scripts/build-playground.sh   # writes public/playground/
-```
-
-Without it the site still builds; only the playground page can't load.
-
-## Examples are checked
-
-Every ```` ```sphp ```` block in the guide, and the playground's example
-programs, is type-checked with the real compiler:
+`editor.md` is a [Monaco](https://microsoft.github.io/monaco-editor/) editor connected to StirPHP's language server, which
+runs as WebAssembly in a Web Worker: `editors/web` of the core repository. Its code is in `.vitepress/theme/editor/`, and
+its sample projects are the folders of `samples/`. To build the language server you need Rust, the
+`wasm32-unknown-unknown` target and [wasm-pack](https://github.com/wasm-bindgen/wasm-pack):
 
 ```sh
-npm run check:examples          # uses `sphp` on PATH, or $SPHP
+STIRPHP_CORE=../core npm run web                     # builds it, into .stirphp-web/
+STIRPHP_CORE=../core SKIP_WASM_BUILD=1 npm run web   # copies what `just web` built in the core repository
 ```
 
-A block passes when its diagnostics are exactly the ones it marks with
-trailing `// error: SPHP0005` comments. Precede a block with
-`<!-- no-check -->` to skip it.
+`.stirphp-web/` isn't committed: it's 15 MB, and it's built from the core release the site describes. Without it the
+site still builds, and the editor page says what's missing.
+
+## Examples are run
+
+Every command's output on the site is from a real run. The projects in `examples/` and `samples/` with an
+`example.json` are checked with `stirphp`, and the pages include their `output/` files:
+
+```sh
+STIRPHP=../core/target/release/stirphp npm run examples              # fail if an output changed
+STIRPHP=../core/target/release/stirphp npm run examples -- --update  # save the new outputs
+```
+
+`examples/with-phpstan` also needs PHPStan: set `PHPSTAN_HOME` to a folder where `composer install` was run with that
+example's `composer.json`. Without it the example is skipped, as it is in CI.
+
+The diagnostics reference, and the list of node kinds rules can visit, are generated from the core's source:
+
+```sh
+STIRPHP_CORE=../core npm run gen:reference              # write them
+STIRPHP_CORE=../core npm run gen:reference -- --check   # fail if they're out of date
+```
 
 ## Publishing
 
-`.github/workflows/deploy.yml` builds the compiler from `StirPHP/core`,
-checks the examples, builds the site and deploys `main` to GitHub Pages.
-Pull requests are built and checked without deploying.
+`.github/workflows/deploy.yml` checks out StirPHP/core at the tag in `CORE_VERSION`, builds `stirphp` and the browser
+build from it, checks the reference and the examples, builds the site and deploys `main` to GitHub Pages. Pull requests
+are built and checked without deploying.
 
-For a custom domain, build with `BASE_PATH=/` (and set the domain in the
-repository's Pages settings).
+To publish with a release of StirPHP:
+
+1. Release StirPHP/core (`just bump`, then push the tag), and wait for its release to finish.
+2. Set `CORE_VERSION` to that tag, such as `v0.2.0`.
+3. Run `npm run examples` and `npm run gen:reference -- --check` against that release, and commit any new outputs.
+4. Push `main`.
+
+For a custom domain, build with `BASE_PATH=/` (and set the domain in the repository's Pages settings).
 
 ## Design
 
-The colors are those of the [Raven](https://useraven.org) website.
+The colours are those of the [Raven](https://useraven.org) website.
 
 ## License
 

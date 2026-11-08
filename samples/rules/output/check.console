@@ -1,0 +1,30 @@
+$ stirphp check
+warning[app.unfinishedName]: `retryTodo` looks unfinished
+    ╭─[ src/Mailer.php:14:5 ]
+    │
+ 14 │     public function retryTodo(): void {}
+    │     ──────────────────┬─────────────────  
+    │                       ╰─────────────────── `retryTodo` looks unfinished
+────╯
+error[method.notFound]: `App\Mailer` has no method `sendLater`
+    ╭─[ src/main.php:12:10 ]
+    │
+ 12 │ $mailer->sendLater('ana@example.com');
+    │          ────┬────  
+    │              ╰────── `App\Mailer` has no method `sendLater`
+────╯
+error[argument.type]: type mismatch in argument `subject` of `send`: 42 is not assignable to string
+    ╭─[ src/main.php:13:34 ]
+    │
+ 13 │ $mailer->send('ana@example.com', 42);
+    │                                  ─┬  
+    │                                   ╰── type mismatch in argument `subject` of `send`: 42 is not assignable to string
+────╯
+error[app.noVarDump]: Don't leave var_dump in
+    ╭─[ src/main.php:15:1 ]
+    │
+ 15 │ var_dump($sent);
+    │ ───────┬───────  
+    │        ╰───────── Don't leave var_dump in
+────╯
+3 errors, 1 warning in 2 files (checked 3 files)

@@ -1,12 +1,12 @@
 ---
 layout: home
 title: StirPHP
-titleTemplate: Type checking for plain PHP
+titleTemplate: A language server and type checker for PHP
 
 hero:
   name: Type safety for PHP,
   text: free and in your editor.
-  tagline: StirPHP is a type checker and language server for plain PHP. It reads your code, its PHPDoc and your Composer setup as they are, with nothing to migrate to and no configuration needed.
+  tagline: StirPHP is a language server and type checker for PHP. It reads your code, its PHPDoc and your Composer setup as they are, with no configuration needed.
   image:
     src: /hero.svg
     alt: ''
@@ -19,8 +19,8 @@ hero:
       link: /editor
 
 features:
-  - title: Plain PHP
-    details: 'Your .php files, their PHPDoc and your Composer packages, read as they are. Nothing to rewrite, no new syntax, no runtime.'
+  - title: Your code as it is
+    details: 'Your .php files, their PHPDoc and your Composer packages, read as they are. Nothing to rewrite, nothing to add at runtime.'
   - title: PHPStan's identifiers and levels
     details: 'Levels 0 to 10, @phpstan-ignore, ignoreErrors and baselines work the way PHPStan has them, and PHPStan can run alongside for what StirPHP lacks.'
   - title: A language server

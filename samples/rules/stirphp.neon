@@ -1,0 +1,7 @@
+parameters:
+    level: 5
+    stirphp:
+        rules:
+            - rules/no_var_dump.rhai
+            - rules/container_return_type.rhai
+            - rules/no_todo_in_names.rhai

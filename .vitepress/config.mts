@@ -18,7 +18,7 @@ if (!existsSync(web)) {
 
 export default defineConfig({
   title: 'StirPHP',
-  description: 'A type checker and language server for plain PHP.',
+  description: 'A language server and type checker for PHP.',
   base,
   // not pages of the site: the repository's README, and the example projects
   srcExclude: ['README.md', 'core/**', 'examples/**', 'samples/**', 'guide/parts/**'],
@@ -70,7 +70,7 @@ export default defineConfig({
     },
     footer: {
       message: 'StirPHP is open source under the MIT license.',
-      copyright: 'A type checker and language server for plain PHP.',
+      copyright: 'A language server and type checker for PHP.',
     },
   },
 })
@@ -104,7 +104,7 @@ function sidebar() {
       ],
     },
     {
-      text: 'Beyond plain PHP',
+      text: 'Frameworks and rules',
       items: [
         { text: 'Frameworks', link: '/guide/frameworks' },
         { text: 'Rules and hooks', link: '/guide/rules' },

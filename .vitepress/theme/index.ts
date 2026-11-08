@@ -12,10 +12,10 @@ import './custom.css'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    // Monaco and the compiler only load on the playground page, in the browser
+    // Monaco and the language server only load on the editor page, in the browser
     app.component(
-      'Playground',
-      defineAsyncComponent(() => import('./playground/Playground.vue')),
+      'StirEditor',
+      defineAsyncComponent(() => import('./editor/StirEditor.vue')),
     )
   },
 } satisfies Theme

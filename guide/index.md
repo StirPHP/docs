@@ -1,12 +1,10 @@
 # What StirPHP is
 
-StirPHP is a type checker and language server for plain PHP. It reads your `.php` files, their PHPDoc and your Composer
-setup as they are. There's nothing to migrate to and no required configuration. It's written in Rust, and the command is
-`stirphp`.
+StirPHP is a language server and type checker for PHP. It reads your `.php` files, their PHPDoc and your Composer
+setup as they are, and needs no configuration. It's written in Rust, and the command is `stirphp`.
 
 The goal is the best open source language server for PHP, as good as PhpStorm's engine. Paid tools leave people who can't
-afford a licence writing code nothing checks, so type safety has to be free, live in the editor, and need no migration or
-setup.
+afford a licence writing code nothing checks, so type safety has to be free, live in the editor, and need no setup.
 
 ## What it does
 
