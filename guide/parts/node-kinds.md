@@ -1,3 +1,3 @@
-<!-- Written by scripts/gen-reference.mjs from StirPHP 0.1.21; don't edit it by hand. -->
+<!-- Written by scripts/gen-reference.mjs from StirPHP 0.2.0; don't edit it by hand. -->
 
 `array`, `array_access`, `anonymous_class`, `arrow_function`, `assign`, `binary_op`, `break`, `cast`, `catch`, `class`, `class_const`, `class_const_fetch`, `clone`, `closure`, `const`, `const_fetch`, `continue`, `do_while`, `echo`, `empty`, `enum`, `error_suppress`, `eval`, `exit`, `for`, `foreach`, `func_call`, `function`, `global`, `goto`, `if`, `include`, `instanceof`, `interface`, `isset`, `literal`, `list`, `magic_const`, `match`, `method`, `method_call`, `name`, `namespace`, `new`, `print`, `property`, `property_fetch`, `return`, `shell_exec`, `static_call`, `static_property_fetch`, `static_var`, `switch`, `ternary`, `throw`, `trait`, `try`, `unary_op`, `unset`, `use`, `variable`, `while`, `yield`

@@ -1,3 +1,3 @@
 # The tag of StirPHP/core this site describes, such as v0.2.0: the deploy workflow builds stirphp
-# and the browser's language server from it. Until the first stirphp release, it's main.
-main
+# and the browser's language server from it.
+v0.2.0
