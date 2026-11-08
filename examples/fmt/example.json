@@ -1,0 +1,8 @@
+{
+  "runs": [
+    { "args": ["fmt", "--check"], "exit": 1, "out": "check.console" },
+    { "args": ["fmt", "-"], "stdin": "src/Point.php", "out": "stdin.console" },
+    { "args": ["fmt", "--indent", "tab", "src/Point.php"], "out": "indent.console", "files": { "src/Point.php": "Point-tabs.php" } },
+    { "args": ["fmt", "--check", "--indent", "tab"], "out": "check-after.console" }
+  ]
+}

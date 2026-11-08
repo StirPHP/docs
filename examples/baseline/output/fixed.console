@@ -1,0 +1,4 @@
+$ stirphp check
+warning: 1 entry of the baseline can go, or could hide new errors:
+  function.notFound in src/legacy.php: expected 2, found 1
+No problems found in 1 file

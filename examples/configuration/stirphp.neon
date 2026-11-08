@@ -1,0 +1,13 @@
+parameters:
+    level: 6
+    stirphp:
+        srcDir: app                 # where the sources are; default: the project folder
+        include: ['**/*.php']       # globs of source files, relative to srcDir
+        exclude: ['vendor/**', 'app/cache/**']  # globs left out
+        composer: composer.json     # default: composer.json in the project folder
+        baseline: stirphp-baseline.neon
+        rules: [rules/no_var_dump.rhai]
+        indent: 4                   # or `tab`, for `stirphp fmt`
+        deprecations: true          # report the use of what's deprecated
+        phpstan: false              # never run PHPStan, even if the project has it
+        frameworks: {laravel: false}  # turn a framework's support off, or on

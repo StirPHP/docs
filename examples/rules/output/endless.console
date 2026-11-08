@@ -1,0 +1,9 @@
+$ stirphp check src/hello.php
+error[SPHP0070]: the script `endless.rhai` failed in `visit_echo`: it took more than the limit of 1000000 operations, while checking `/path/to/project/src/hello.php`
+   ╭─[ rules/endless.rhai:1:1 ]
+   │
+ 1 │ // Never finishes: it's stopped after 1,000,000 operations.
+   │ ┬  
+   │ ╰── the script `endless.rhai` failed in `visit_echo`: it took more than the limit of 1000000 operations, while checking `/path/to/project/src/hello.php`
+───╯
+1 error, 0 warnings in 1 file (checked 1 file)

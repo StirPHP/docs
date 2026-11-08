@@ -1,0 +1,7 @@
+{
+  "runs": [
+    { "args": ["check"], "exit": 1, "out": "check.console" },
+    { "copy": { "alt/stirphp.neon.next": "stirphp.neon" } },
+    { "args": ["check", "src/hello.php"], "exit": 1, "out": "endless.console" }
+  ]
+}

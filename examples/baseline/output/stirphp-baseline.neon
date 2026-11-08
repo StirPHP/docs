@@ -1,0 +1,10 @@
+parameters:
+	ignoreErrors:
+		-
+			identifier: function.notFound
+			count: 2
+			path: src/legacy.php
+		-
+			identifier: return.type
+			count: 1
+			path: src/legacy.php

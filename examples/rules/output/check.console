@@ -1,0 +1,23 @@
+$ stirphp check
+error[method.notFound]: `App\Mailer` has no method `sned`
+    ╭─[ src/app.php:65:37 ]
+    │
+ 65 │     $container->get(Mailer::class)->sned('ana@example.com');
+    │                                     ──┬─  
+    │                                       ╰─── `App\Mailer` has no method `sned`
+────╯
+error[property.notFound]: `App\User` has no property `name`, only `__get`
+    ╭─[ src/app.php:69:13 ]
+    │
+ 69 │     $user?->name;
+    │             ──┬─  
+    │               ╰─── `App\User` has no property `name`, only `__get`
+────╯
+error[app.noVarDump]: Don't leave var_dump in
+    ╭─[ src/app.php:75:5 ]
+    │
+ 75 │     var_dump($sent, $id, $users);
+    │     ──────────────┬─────────────  
+    │                   ╰─────────────── Don't leave var_dump in
+────╯
+3 errors, 0 warnings in 1 file (checked 2 files)

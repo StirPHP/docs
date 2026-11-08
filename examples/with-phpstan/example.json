@@ -1,0 +1,8 @@
+{
+  "needs": ["phpstan"],
+  "runs": [
+    { "args": ["check"], "exit": 1, "out": "check.console" },
+    { "args": ["check", "--with-phpstan"], "exit": 1, "out": "with-phpstan.console" },
+    { "args": ["check", "--with-phpstan", "--format", "json"], "exit": 1, "out": "with-phpstan-json.console" }
+  ]
+}

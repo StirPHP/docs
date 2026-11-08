@@ -1,0 +1,17 @@
+$ stirphp check
+notice: Composer's packages aren't installed: /path/to/project/vendor/composer/installed.json doesn't exist. Run `composer install`; until then, errors about what they'd declare are held back. Held back so far: 2.
+error[class.notFound]: unknown type `App\Mailer`
+    ╭─[ src/Logs.php:14:31 ]
+    │
+ 14 │     public function broken(): Mailer
+    │                               ───┬──  
+    │                                  ╰──── unknown type `App\Mailer`
+────╯
+error[class.notFound]: unknown class `Mailer`
+    ╭─[ src/Logs.php:16:20 ]
+    │
+ 16 │         return new Mailer();
+    │                    ───┬──  
+    │                       ╰──── unknown class `Mailer`
+────╯
+2 errors, 0 warnings in 1 file (checked 1 file)

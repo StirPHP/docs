@@ -1,0 +1,6 @@
+includes:
+    - phpstan.neon
+
+parameters:
+    stirphp:
+        exclude: ['vendor/**', 'tests/fixtures/**']

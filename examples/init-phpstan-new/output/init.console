@@ -1,0 +1,2 @@
+$ stirphp init --phpstan
+Created `/path/to/project/phpstan.neon`.

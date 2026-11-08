@@ -1,0 +1,23 @@
+$ stirphp check
+error[classConstant.nativeTypeNotSupported]: PHP 8.3 added typed class constants, but this project targets PHP 8.2
+   ╭─[ src/Status.php:5:11 ]
+   │
+ 5 │     const string ACTIVE = 'active';
+   │           ───┬──  
+   │              ╰──── PHP 8.3 added typed class constants, but this project targets PHP 8.2
+───╯
+error[SPHP0060]: PHP 8.4 added asymmetric visibility, but this project targets PHP 8.2
+   ╭─[ src/Status.php:8:9 ]
+   │
+ 8 │         public private(set) string $name,
+   │         ─────────┬─────────  
+   │                  ╰─────────── PHP 8.4 added asymmetric visibility, but this project targets PHP 8.2
+───╯
+error[SPHP0061]: PHP 8.4 added `array_find()`, but this project targets PHP 8.2
+    ╭─[ src/Status.php:14:12 ]
+    │
+ 14 │     return array_find($statuses, fn (string $s): bool => $s === Status::ACTIVE);
+    │            ─────┬────  
+    │                 ╰────── PHP 8.4 added `array_find()`, but this project targets PHP 8.2
+────╯
+3 errors, 0 warnings in 1 file (checked 1 file)

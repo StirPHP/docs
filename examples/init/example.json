@@ -1,0 +1,2 @@
+{ "runs": [ { "args": ["init"], "out": "init.console", "files": { "stirphp.neon": "stirphp.neon" } },
+            { "args": ["init"], "out": "init-again.console" } ] }

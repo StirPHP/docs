@@ -1,0 +1,9 @@
+$ stirphp check
+error[function.notFound]: unknown function `yet_another_helper`
+    ╭─[ src/legacy.php:24:12 ]
+    │
+ 24 │     return yet_another_helper();
+    │            ─────────┬────────  
+    │                     ╰────────── unknown function `yet_another_helper`
+────╯
+1 error, 0 warnings in 1 file (checked 1 file)

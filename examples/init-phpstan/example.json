@@ -1,0 +1,2 @@
+{ "runs": [ { "args": ["init"], "out": "init.console", "files": { "phpstan.neon": "phpstan.neon" } },
+            { "args": ["check"], "out": "check.console" } ] }

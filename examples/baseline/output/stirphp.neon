@@ -1,0 +1,9 @@
+# StirPHP's settings, and PHPStan's parameters such as `level` and `paths`.
+# To share them with PHPStan, include its configuration:
+#
+# includes:
+#     - phpstan.neon
+
+parameters:
+	stirphp:
+		baseline: stirphp-baseline.neon

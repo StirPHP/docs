@@ -1,0 +1,17 @@
+$ stirphp check
+notice: Skipped 1 `ignoreErrors` entry: it matches on a message without both an identifier and a path, and messages are never matched.
+error[return.type]: type mismatch in return value: 'tall' is not assignable to int
+    ╭─[ src/comments.php:16:12 ]
+    │
+ 16 │     return 'tall'; // @phpstan-ignore argument.type
+    │            ───┬──  
+    │               ╰──── type mismatch in return value: 'tall' is not assignable to int
+────╯
+error[function.notFound]: unknown function `third_helper`
+   ╭─[ src/legacy.php:5:6 ]
+   │
+ 5 │ echo third_helper();
+   │      ──────┬─────  
+   │            ╰─────── unknown function `third_helper`
+───╯
+2 errors, 0 warnings in 2 files (checked 2 files)

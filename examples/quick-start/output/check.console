@@ -1,0 +1,16 @@
+$ stirphp check
+error[method.notFound]: `$this` has no method `totl`
+    ╭─[ src/Invoice.php:12:35 ]
+    │
+ 12 │         return 'Total: ' . $this->totl();
+    │                                   ──┬─  
+    │                                     ╰─── `$this` has no method `totl`
+────╯
+error[return.type]: type mismatch in return value: 'many' is not assignable to int
+    ╭─[ src/Invoice.php:27:16 ]
+    │
+ 27 │         return "many";
+    │                ───┬──  
+    │                   ╰──── type mismatch in return value: 'many' is not assignable to int
+────╯
+2 errors, 0 warnings in 1 file (checked 2 files)

@@ -1,102 +1,74 @@
 # Installation
 
-## Install script
+StirPHP is one program, `stirphp`, with no dependencies: it doesn't need PHP, Composer or PHPStan to work.
 
-On Linux and macOS:
+## One line
+
+Linux and macOS, to `~/.local/bin/stirphp`:
 
 ```sh
 curl -fsSL https://stirphp.github.io/core/install.sh | sh
 ```
 
-On Windows, in PowerShell:
+Windows (PowerShell), to `%LOCALAPPDATA%\Programs\stirphp\bin\stirphp.exe`:
 
 ```powershell
 irm https://stirphp.github.io/core/install.ps1 | iex
 ```
 
-The script picks the build for your platform, downloads the latest release,
-checks it against the release's `SHA256SUMS` and installs `sphp` without admin
-rights: to `~/.local/bin` on Linux and macOS, and to
-`%LOCALAPPDATA%\Programs\sphp\bin` on Windows, where it also adds that directory
-to your user `PATH`. On Linux and macOS, it tells you what to add to your shell
-profile if the directory isn't on your `PATH`.
+These install the latest release for your platform, after checking it against the release's `SHA256SUMS`, and need no
+admin rights. On Windows the script adds that folder to your user `PATH`; on Linux and macOS, make sure `~/.local/bin` is
+on yours.
 
 | Variable | |
 |---|---|
-| `SPHP_VERSION` | A version such as `0.1.1`, or `nightly` (default: the latest release) |
-| `SPHP_INSTALL_DIR` | Where to put `sphp` |
-| `SPHP_NO_MODIFY_PATH` | Windows: set it to leave your `PATH` alone |
-
-Set them for the shell that runs the script:
+| `STIRPHP_VERSION` | a version such as `0.2.0`, or `nightly` for a build of the latest commit; by default the latest release |
+| `STIRPHP_INSTALL_DIR` | where to put `stirphp` |
+| `STIRPHP_NO_MODIFY_PATH` | on Windows, leave your `PATH` alone |
 
 ```sh
-curl -fsSL https://stirphp.github.io/core/install.sh | SPHP_VERSION=nightly sh
+curl -fsSL https://stirphp.github.io/core/install.sh | STIRPHP_VERSION=nightly sh
 ```
 
-To read the scripts first, they are
-[`install.sh`](https://github.com/StirPHP/core/blob/main/install.sh) and
-[`install.ps1`](https://github.com/StirPHP/core/blob/main/install.ps1).
+The scripts are [`install.sh`](https://github.com/StirPHP/core/blob/main/install.sh) and
+[`install.ps1`](https://github.com/StirPHP/core/blob/main/install.ps1), if you'd rather read them first.
 
-## Prebuilt binaries
+## Downloads
 
-To install by hand, every [release](https://github.com/StirPHP/core/releases) has
-`sphp` for:
+Archives for Linux (x86-64 and ARM64, static), macOS (Intel and Apple silicon) and Windows (x86-64 and ARM64) are on the
+[releases page](https://github.com/StirPHP/core/releases), with their `SHA256SUMS`. Each has the `stirphp` binary, the
+licence and the README.
 
-| Platform | Archive |
-|---|---|
-| Linux x86_64 | `sphp-x86_64-unknown-linux-musl.tar.gz` |
-| Linux arm64 | `sphp-aarch64-unknown-linux-musl.tar.gz` |
-| macOS Intel | `sphp-x86_64-apple-darwin.tar.gz` |
-| macOS Apple silicon | `sphp-aarch64-apple-darwin.tar.gz` |
-| Windows x86_64 | `sphp-x86_64-pc-windows-msvc.zip` |
-| Windows arm64 | `sphp-aarch64-pc-windows-msvc.zip` |
+## VS Code
 
-Each also comes with the version in its name (`sphp-0.1.1-x86_64-...`). The Linux
-binaries are statically linked (musl), so they run on any distribution, whatever
-its glibc. `releases/latest/download/<archive>` always gets the newest release.
-
-Each release also lists `SHA256SUMS` for the archives, and the VS Code
-extension as a `.vsix` (see [Editor support](./editors)).
-
-### Nightly builds
-
-The [`nightly`](https://github.com/StirPHP/core/releases/tag/nightly)
-prerelease is rebuilt from every commit on `main`, with stable file names
-(`sphp-nightly-<target>`). The install script can fetch it:
+The extension starts StirPHP when you open a PHP file, and downloads `stirphp` by itself, so you don't need to install it
+first. It isn't on the Marketplace yet: download `stirphp-vscode-<version>.vsix` from the
+[releases page](https://github.com/StirPHP/core/releases) and install it with **Extensions: Install from VSIX...**, or:
 
 ```sh
-curl -fsSL https://stirphp.github.io/core/install.sh | SPHP_VERSION=nightly sh
+code --install-extension stirphp-vscode-<version>.vsix
 ```
 
-`sphp --version` tells which commit a nightly was built from. Nightlies may be
-broken; use them to try a fix before it is released.
+It needs VS Code 1.100 or newer. See [Editor setup](/guide/editors) for its settings and for other editors.
 
 ## From source
 
-You need [Rust](https://rustup.rs) (rustup; the repository pins the toolchain
-it needs) and Git:
+With Rust 1.96 or newer:
 
 ```sh
-git clone https://github.com/StirPHP/core stirphp
+git clone https://github.com/StirPHP/core.git stirphp
 cd stirphp
 git submodule update --init --depth 1 crates/stir_stubs/phpstorm-stubs
 cargo install --path crates/stir_cli
 ```
 
-The submodule holds JetBrains' [phpstorm-stubs](https://github.com/JetBrains/phpstorm-stubs),
-the signatures of PHP's functions and classes, which are compiled into the
-binary. The repository's other submodules are test corpora you don't need.
+The submodule is JetBrains' [phpstorm-stubs](https://github.com/JetBrains/phpstorm-stubs), the declarations of PHP's own
+functions and classes, which are built into the binary.
 
-To update, `git pull`, update the submodule the same way and run
-`cargo install --path crates/stir_cli` again.
+## Check it works
 
-## Running the output
+```sh
+stirphp --version
+```
 
-What StirPHP generates needs PHP 8.4 or later.
-
-## Editor support
-
-`sphp` includes a language server. To set up VS Code, Neovim or Helix, see
-[Editor support](./editors).
-
-Next: [Your first project](./first-project).
+Then follow the [quick start](/guide/quick-start).

@@ -1,0 +1,23 @@
+$ stirphp check
+error[wordpress.hookArguments]: the hook `greeter_name` is run with 1 argument, not 2
+    ╭─[ greeter.php:11:49 ]
+    │
+ 11 │ add_filter('greeter_name', 'greeter_title', 10, 2);
+    │                                                 ┬  
+    │                                                 ╰── the hook `greeter_name` is run with 1 argument, not 2
+────╯
+error[argument.type]: the callback `greeter_setup` isn't a function
+    ╭─[ greeter.php:12:20 ]
+    │
+ 12 │ add_action('init', 'greeter_setup');
+    │                    ───────┬───────  
+    │                           ╰───────── the callback `greeter_setup` isn't a function
+────╯
+error[method.notFound]: `wpdb` has no method `get_vr`
+    ╭─[ greeter.php:17:21 ]
+    │
+ 17 │     $count = $wpdb->get_vr('SELECT COUNT(*) FROM wp_posts');
+    │                     ───┬──  
+    │                        ╰──── `wpdb` has no method `get_vr`
+────╯
+3 errors, 0 warnings in 1 file (checked 1 file)

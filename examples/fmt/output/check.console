@@ -1,0 +1,3 @@
+$ stirphp fmt --check
+src/Point.php
+1 of 1 files would change

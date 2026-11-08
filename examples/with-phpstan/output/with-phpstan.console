@@ -1,0 +1,30 @@
+$ stirphp check --with-phpstan
+PHPStan reported 3, of which 1 are shown as ours.
+error[missingType.generics]: Property Cart::$history with generic class ArrayIterator does not specify its types: TKey, TValue
+   ╭─[ src/Cart.php:8:5 ]
+   │
+ 8 │     private \ArrayIterator $history;
+   │     ────────────────┬───────────────  
+   │                     ╰───────────────── Property Cart::$history with generic class ArrayIterator does not specify its types: TKey, TValue
+   │ 
+   │ Note: reported by PHPStan
+───╯
+error[property.onlyWritten]: Property Cart::$history is never read, only written.
+   ╭─[ src/Cart.php:8:5 ]
+   │
+ 8 │     private \ArrayIterator $history;
+   │     ────────────────┬───────────────  
+   │                     ╰───────────────── Property Cart::$history is never read, only written.
+   │ 
+   │ Note 1: See: https://phpstan.org/developing-extensions/always-read-written-properties
+   │ 
+   │ Note 2: reported by PHPStan
+───╯
+error[missingType.return]: Method Cart::skus() has no return type specified.
+    ╭─[ src/Cart.php:21:5 ]
+    │
+ 21 │     public function skus()
+    │     ──────────┬─────────  
+    │               ╰─────────── Method Cart::skus() has no return type specified.
+────╯
+3 errors, 0 warnings in 1 file (checked 1 file)

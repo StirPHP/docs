@@ -1,0 +1,23 @@
+$ stirphp check --level 8
+error[method.notFound]: `$this` has no method `totl`
+    ╭─[ src/Invoice.php:12:35 ]
+    │
+ 12 │         return 'Total: ' . $this->totl();
+    │                                   ──┬─  
+    │                                     ╰─── `$this` has no method `totl`
+────╯
+error[return.type]: type mismatch in return value: 'many' is not assignable to int
+    ╭─[ src/Invoice.php:27:16 ]
+    │
+ 27 │         return "many";
+    │                ───┬──  
+    │                   ╰──── type mismatch in return value: 'many' is not assignable to int
+────╯
+error[argument.type]: type mismatch in argument `times` of `str_repeat`: null is not assignable to int (the value may be null)
+   ╭─[ src/report.php:8:28 ]
+   │
+ 8 │     return str_repeat('-', $width);
+   │                            ───┬──  
+   │                               ╰──── type mismatch in argument `times` of `str_repeat`: null is not assignable to int (the value may be null)
+───╯
+3 errors, 0 warnings in 2 files (checked 2 files)

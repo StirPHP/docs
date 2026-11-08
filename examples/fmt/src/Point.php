@@ -1,0 +1,7 @@
+<?php
+namespace App;
+final class Point {
+  public function __construct(public int $x=0,public int $y=0){}
+    public function add(Point $other):Point{ if($other->x===0&&$other->y===0){return $this;}
+  return new Point($this->x+$other->x,$this->y+$other->y); }
+}

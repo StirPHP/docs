@@ -1,0 +1,45 @@
+$ stirphp check --with-phpstan --format json
+PHPStan reported 3, of which 1 are shown as ours.
+[
+  {
+    "file": "src/Cart.php",
+    "line": 8,
+    "column": 5,
+    "endLine": 8,
+    "endColumn": 37,
+    "severity": "error",
+    "code": "missingType.generics",
+    "message": "Property Cart::$history with generic class ArrayIterator does not specify its types: TKey, TValue",
+    "labels": [],
+    "notes": [],
+    "source": "phpstan"
+  },
+  {
+    "file": "src/Cart.php",
+    "line": 8,
+    "column": 5,
+    "endLine": 8,
+    "endColumn": 37,
+    "severity": "error",
+    "code": "property.onlyWritten",
+    "message": "Property Cart::$history is never read, only written.",
+    "labels": [],
+    "notes": [
+      "See: https://phpstan.org/developing-extensions/always-read-written-properties"
+    ],
+    "source": "phpstan"
+  },
+  {
+    "file": "src/Cart.php",
+    "line": 21,
+    "column": 5,
+    "endLine": 21,
+    "endColumn": 25,
+    "severity": "error",
+    "code": "missingType.return",
+    "message": "Method Cart::skus() has no return type specified.",
+    "labels": [],
+    "notes": []
+  }
+]
+3 errors, 0 warnings in 1 file (checked 1 file)

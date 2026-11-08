@@ -1,0 +1,3 @@
+$ stirphp check --generate-baseline
+Baseline generated with 3 errors in `stirphp-baseline.neon`.
+`parameters.stirphp.baseline` in `stirphp.neon` names it now.

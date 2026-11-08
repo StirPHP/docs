@@ -1,0 +1,1 @@
+{ "runs": [ { "args": ["check"], "out": "check.console" } ] }

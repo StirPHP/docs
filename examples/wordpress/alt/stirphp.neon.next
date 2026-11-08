@@ -1,0 +1,3 @@
+parameters:
+    stirphp:
+        frameworks: {laravel: false, wordpress: false}

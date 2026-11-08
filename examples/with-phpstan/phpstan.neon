@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    paths:
+        - src
+    stirphp:
+        baseline: stirphp-baseline.neon
+
+parametersSchema:
+    ?stirphp: mixed()

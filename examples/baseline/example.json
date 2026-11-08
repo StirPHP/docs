@@ -1,0 +1,51 @@
+{
+  "runs": [
+    {
+      "args": [
+        "check"
+      ],
+      "exit": 1,
+      "out": "before.console"
+    },
+    {
+      "args": [
+        "check",
+        "--generate-baseline"
+      ],
+      "out": "generate.console",
+      "files": {
+        "stirphp.neon": "stirphp.neon",
+        "stirphp-baseline.neon": "stirphp-baseline.neon"
+      }
+    },
+    {
+      "args": [
+        "check"
+      ],
+      "out": "after.console"
+    },
+    {
+      "copy": {
+        "later/legacy.php.next": "src/legacy.php"
+      }
+    },
+    {
+      "args": [
+        "check"
+      ],
+      "exit": 1,
+      "out": "new-error.console"
+    },
+    {
+      "copy": {
+        "later/fixed.php.next": "src/legacy.php"
+      }
+    },
+    {
+      "args": [
+        "check"
+      ],
+      "out": "fixed.console"
+    }
+  ]
+}

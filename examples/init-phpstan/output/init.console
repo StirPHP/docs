@@ -1,0 +1,2 @@
+$ stirphp init
+Added `parameters.stirphp` to `/path/to/project/phpstan.neon`.

@@ -1,0 +1,7 @@
+{
+  "runs": [
+    { "args": ["check"], "exit": 1, "out": "check.console" },
+    { "args": ["check", "--level", "8"], "exit": 1, "out": "check-level-8.console" },
+    { "args": ["check", "--format", "json", "--max-errors", "1"], "exit": 1, "out": "check-json.console" }
+  ]
+}

@@ -1,0 +1,14 @@
+parameters:
+    level: 5
+    ignoreErrors:
+        # identifier, path and count: hides up to 2 in that file
+        -
+            identifier: function.notFound
+            path: src/legacy.php
+            count: 2
+        # only an identifier: hides it everywhere
+        -
+            identifier: class.notFound
+        # a message alone isn't matched, as messages differ from PHPStan's: skipped
+        -
+            message: '#^Call to an undefined method#'

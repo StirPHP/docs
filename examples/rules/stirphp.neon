@@ -1,0 +1,8 @@
+parameters:
+    level: 6
+    stirphp:
+        rules:
+            - rules/no_var_dump.rhai
+            - rules/container_return_type.rhai
+            - rules/model_magic_members.rhai
+            - rules/query_where.rhai

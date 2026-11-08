@@ -1,4 +1,5 @@
 node_modules/
 .vitepress/dist/
 .vitepress/cache/
-/public/playground/
+# the browser language server, from `npm run web`
+/.stirphp-web/

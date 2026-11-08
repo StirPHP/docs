@@ -1,0 +1,16 @@
+$ stirphp check --format json --max-errors 1
+[
+  {
+    "file": "src/Invoice.php",
+    "line": 12,
+    "column": 35,
+    "endLine": 12,
+    "endColumn": 39,
+    "severity": "error",
+    "code": "method.notFound",
+    "message": "`$this` has no method `totl`",
+    "labels": [],
+    "notes": []
+  }
+]
+2 errors, 0 warnings in 1 file (checked 2 files)

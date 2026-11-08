@@ -1,17 +1,27 @@
+import { existsSync, readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import type { Plugin } from 'vite'
 import { defineConfig } from 'vitepress'
-import sphp from './sphp.tmLanguage.json' with { type: 'json' }
 
 // Published as a GitHub Pages project site: https://stirphp.github.io/docs/
 // With a custom domain, build with BASE_PATH=/
 const base = process.env.BASE_PATH ?? '/docs/'
 
+// The browser language server, from `npm run web`. Without it the site still builds, and the
+// editor page says it's missing.
+const web = fileURLToPath(new URL('../.stirphp-web/index.js', import.meta.url))
+const webMissing = fileURLToPath(new URL('./theme/editor/web-missing.ts', import.meta.url))
+if (!existsSync(web)) {
+  console.warn('.stirphp-web/ is missing: the editor page will say so. Build it with `npm run web`.')
+}
+
 export default defineConfig({
   title: 'StirPHP',
-  description: 'A strictly typed superset of PHP that compiles to plain PHP.',
+  description: 'A type checker and language server for plain PHP.',
   base,
-  // not pages of the site: the repository's README, and the StirPHP core
-  // checkout that CI builds the playground compiler from
-  srcExclude: ['README.md', 'core/**'],
+  // not pages of the site: the repository's README, and the example projects
+  srcExclude: ['README.md', 'core/**', 'examples/**', 'samples/**', 'guide/parts/**'],
   cleanUrls: false,
   lastUpdated: true,
   head: [
@@ -19,62 +29,37 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#ce0049' }],
   ],
   vite: {
-    // Monaco is large; it only loads on the playground page
+    plugins: [monacoCssAtRuntime()],
+    resolve: {
+      alias: {
+        'stirphp-web': existsSync(web) ? web : webMissing,
+        // only for browsers, which the server-side build of the pages doesn't count as
+        'vscode-languageserver-protocol/browser': fileURLToPath(
+          new URL('../node_modules/vscode-languageserver-protocol/lib/browser/main.js', import.meta.url),
+        ),
+        'vscode-jsonrpc/browser': fileURLToPath(new URL('../node_modules/vscode-jsonrpc/lib/browser/main.js', import.meta.url)),
+      },
+    },
+    // Monaco is large; it only loads on the editor page
     build: { chunkSizeWarningLimit: 4096 },
     worker: { format: 'es' },
   },
   markdown: {
     theme: { light: 'github-light', dark: 'github-dark' },
-    languages: [{ ...sphp, name: 'sphp', aliases: ['stirphp'] } as any],
+    // Shiki has neither; these are close
+    languageAlias: { neon: 'yaml', rhai: 'rust' },
   },
   themeConfig: {
     logo: '/logo.svg',
     siteTitle: 'StirPHP',
     nav: [
-      { text: 'Guide', link: '/guide/', activeMatch: '^/guide/((index|installation|first-project)(\\.html)?)?$' },
-      { text: 'Language', link: '/guide/bindings', activeMatch: '^/guide/(bindings|types|functions|classes|records|control-flow|generics|extensions|php-interop)' },
-      { text: 'Tooling', link: '/guide/cli', activeMatch: '^/guide/(cli|configuration|editors|output)' },
-      { text: 'Reference', link: '/guide/diagnostics' },
-      { text: 'Playground', link: '/playground' },
+      { text: 'Guide', link: '/guide/', activeMatch: '^/guide/' },
+      { text: 'Diagnostics', link: '/reference/diagnostics', activeMatch: '^/reference/' },
+      { text: 'Editor', link: '/editor' },
     ],
     sidebar: {
-      '/guide/': [
-        {
-          text: 'Getting started',
-          items: [
-            { text: 'Introduction', link: '/guide/' },
-            { text: 'Installation', link: '/guide/installation' },
-            { text: 'Your first project', link: '/guide/first-project' },
-          ],
-        },
-        {
-          text: 'Language',
-          items: [
-            { text: 'Values and variables', link: '/guide/bindings' },
-            { text: 'Types and null safety', link: '/guide/types' },
-            { text: 'Functions and lambdas', link: '/guide/functions' },
-            { text: 'Classes and data classes', link: '/guide/classes' },
-            { text: 'Records', link: '/guide/records' },
-            { text: 'when, is and smart casts', link: '/guide/control-flow' },
-            { text: 'Generics', link: '/guide/generics' },
-            { text: 'Extensions and the stdlib', link: '/guide/extensions' },
-            { text: 'Working with PHP', link: '/guide/php-interop' },
-          ],
-        },
-        {
-          text: 'Tooling',
-          items: [
-            { text: 'Command line', link: '/guide/cli' },
-            { text: 'Configuration', link: '/guide/configuration' },
-            { text: 'Editor support', link: '/guide/editors' },
-            { text: 'The generated PHP', link: '/guide/output' },
-          ],
-        },
-        {
-          text: 'Reference',
-          items: [{ text: 'Diagnostics', link: '/guide/diagnostics' }],
-        },
-      ],
+      '/guide/': sidebar(),
+      '/reference/': sidebar(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/StirPHP/core' }],
     search: { provider: 'local' },
@@ -85,7 +70,99 @@ export default defineConfig({
     },
     footer: {
       message: 'StirPHP is open source under the MIT license.',
-      copyright: 'Compiles to plain PHP 8.4.',
+      copyright: 'A type checker and language server for plain PHP.',
     },
   },
 })
+
+function sidebar() {
+  return [
+    {
+      text: 'Getting started',
+      items: [
+        { text: 'What StirPHP is', link: '/guide/' },
+        { text: 'Installation', link: '/guide/installation' },
+        { text: 'Quick start', link: '/guide/quick-start' },
+      ],
+    },
+    {
+      text: 'Using it',
+      items: [
+        { text: 'Command line', link: '/guide/cli' },
+        { text: 'Configuration', link: '/guide/configuration' },
+        { text: 'Levels and ignoring', link: '/guide/levels' },
+        { text: 'Baselines', link: '/guide/baselines' },
+        { text: 'PHP versions', link: '/guide/php-versions' },
+        { text: 'Composer', link: '/guide/composer' },
+      ],
+    },
+    {
+      text: 'PHPStan',
+      items: [
+        { text: 'Compatibility', link: '/guide/phpstan' },
+        { text: 'Running PHPStan alongside', link: '/guide/running-phpstan' },
+      ],
+    },
+    {
+      text: 'Beyond plain PHP',
+      items: [
+        { text: 'Frameworks', link: '/guide/frameworks' },
+        { text: 'Rules and hooks', link: '/guide/rules' },
+      ],
+    },
+    {
+      text: 'Editors',
+      items: [
+        { text: 'Editor setup', link: '/guide/editors' },
+        { text: 'Code actions', link: '/guide/code-actions' },
+        { text: 'Formatter', link: '/guide/formatter' },
+        { text: 'In the browser', link: '/guide/browser' },
+      ],
+    },
+    {
+      text: 'Reference',
+      items: [{ text: 'Diagnostics', link: '/reference/diagnostics' }],
+    },
+  ]
+}
+
+/**
+ * Monaco's stylesheets, added to the page by its own code when it loads, instead of in the site's
+ * one stylesheet, where VitePress puts every page's CSS: so pages without the editor don't
+ * download them.
+ */
+function monacoCssAtRuntime(): Plugin {
+  const prefix = '\0monaco-css:'
+  return {
+    name: 'stirphp:monaco-css-at-runtime',
+    enforce: 'pre',
+    async resolveId(source, importer) {
+      if (!source.endsWith('.css') || !importer?.includes('/node_modules/monaco-editor/')) return null
+      const resolved = await this.resolve(source, importer, { skipSelf: true })
+      return resolved ? `${prefix}${resolved.id}.js` : null
+    },
+    load(id) {
+      if (!id.startsWith(prefix)) return null
+      const file = id.slice(prefix.length, -'.js'.length)
+      const css = readFileSync(file, 'utf8')
+      // relative `url(..)`s, such as the icons' font, are assets of the build
+      const imports: string[] = []
+      const text: string[] = []
+      let last = 0
+      for (const m of css.matchAll(/url\((['"]?)(\.{1,2}\/[^'")]+)\1\)/g)) {
+        const name = `asset${imports.length}`
+        imports.push(`import ${name} from ${JSON.stringify(resolve(dirname(file), m[2]) + '?url')}`)
+        text.push(JSON.stringify(css.slice(last, m.index) + 'url("'), name, JSON.stringify('")'))
+        last = m.index + m[0].length
+      }
+      text.push(JSON.stringify(css.slice(last)))
+      return [
+        ...imports,
+        "const style = document.createElement('style')",
+        `style.dataset.monaco = ${JSON.stringify(file.split('/node_modules/').pop())}`,
+        `style.textContent = ${text.join(' + ')}`,
+        'document.head.append(style)',
+      ].join('\n')
+    },
+  }
+}

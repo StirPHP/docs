@@ -1,109 +1,43 @@
 ---
 layout: home
 title: StirPHP
-titleTemplate: A typed superset of PHP
+titleTemplate: Type checking for plain PHP
 
 hero:
-  name: PHP, with types
-  text: you can trust.
-  tagline: StirPHP is a strictly typed superset of PHP. Write .sphp, let the checker catch the bugs, and ship plain, readable PHP 8.4 with PHPStan-ready PHPDoc.
+  name: Type safety for PHP,
+  text: free and in your editor.
+  tagline: StirPHP is a type checker and language server for plain PHP. It reads your code, its PHPDoc and your Composer setup as they are, with nothing to migrate to and no configuration needed.
   image:
     src: /hero.svg
     alt: ''
   actions:
     - theme: brand
       text: Get started →
-      link: /guide/installation
+      link: /guide/quick-start
     - theme: alt
-      text: Read the guide →
-      link: /guide/
+      text: Try it in the browser →
+      link: /editor
 
 features:
-  - title: Null safety
-    details: 'String and String? are different types. ?->, ?:, !! and smart casts make every null visible, and untyped PHP values must be narrowed before use.'
-  - title: No top type
-    details: 'No mixed, no Any. Generics with bounds and variance are how code accepts "anything", and an unknown value can''t be used until it is narrowed.'
-  - title: Values that say what they are
-    details: 'val has no $ and never changes; var $x does. Records are typed arrays, data classes are immutable objects, sealed hierarchies make when exhaustive.'
-  - title: Plain PHP out
-    details: 'The compiler emits ordinary PHP 8.4 classes, functions and arrays with PHPDoc. No runtime magic: what you ship is what you can read.'
-  - title: Gradual, like TypeScript
-    details: 'Keep your .php files. Their PHPDoc is read the PHPStan way, phpstan.neon levels apply, and Composer dependencies are typed from their signatures.'
-  - title: A real language server
-    details: 'Diagnostics as you type, hover with narrowed types, go to definition, rename, completion of extension methods and inlay hints, in any LSP editor.'
+  - title: Plain PHP
+    details: 'Your .php files, their PHPDoc and your Composer packages, read as they are. Nothing to rewrite, no new syntax, no runtime.'
+  - title: PHPStan's identifiers and levels
+    details: 'Levels 0 to 10, @phpstan-ignore, ignoreErrors and baselines work the way PHPStan has them, and PHPStan can run alongside for what StirPHP lacks.'
+  - title: A language server
+    details: 'Diagnostics as you type, hover, completion that adds use lines, go to definition into packages and stubs, rename, inlay hints, quick fixes and refactorings.'
+  - title: Your PHP version
+    details: 'Syntax and library functions are checked against the version composer.json or your configuration targets.'
+  - title: Laravel, Symfony and WordPress
+    details: 'Models, scopes, facades, container services and hooks are understood, without running PHP.'
+  - title: Rules in a sandbox
+    details: 'Custom rules and type hooks are Rhai scripts, which can''t touch files or the network, on the command line, in an editor and in the browser.'
 ---
 
-## Write StirPHP, ship PHP
+## Why
 
-On the left is what you write; on the right, what `sphp build` emits. The
-`when` is checked for exhaustiveness: drop a branch and the build fails.
-
-::: code-group
-
-```sphp [src/Shop.sphp]
-namespace Shop
-
-sealed interface Payment
-data class Card(val last4: String) : Payment
-data class Invoice(val days: Int) : Payment
-
-record Line { name: String; cents: Int; qty: Int = 1 }
-
-function total(lines: List<Line>): Int = lines->sumOf { it->cents * it->qty }
-
-function describe(p: Payment?): String = when (p) {
-    is Card -> "card ending ${p->last4}"
-    is Invoice -> "invoice, due in ${p->days} days"
-    null -> "not paid yet"
-}
-```
-
-```php [build/Shop.php]
-<?php
-
-declare(strict_types=1);
-
-namespace Shop;
-
-require_once __DIR__ . '/stir-runtime.php';
-
-interface Payment
-{
-}
-
-final readonly class Card implements \Shop\Payment
-{
-    public function __construct(
-        public string $last4,
-    ) {
-    }
-}
-
-final readonly class Invoice implements \Shop\Payment
-{
-    public function __construct(
-        public int $days,
-    ) {
-    }
-}
-
-/** @param list<array{name: string, cents: int, qty: int}> $lines */
-function total(array $lines): int
-{
-    return \Stir\List_sumOf($lines, fn (array $it): int => $it['cents'] * $it['qty']);
-}
-
-function describe(?\Shop\Payment $p): string
-{
-    return match (true) {
-        $p instanceof \Shop\Card => "card ending {$p->last4}",
-        $p instanceof \Shop\Invoice => "invoice, due in {$p->days} days",
-        $p === null => 'not paid yet',
-    };
-}
-```
-
-:::
+The goal is the best open source language server for PHP, as good as PhpStorm's engine. Type safety shouldn't depend on
+being able to pay for a licence, and it should work live in the editor. It isn't there yet: see
+[its current state](/guide/#current-state).
 
 ## Install
 
@@ -119,16 +53,10 @@ irm https://stirphp.github.io/core/install.ps1 | iex
 
 :::
 
-## Three commands
+Then, in a project's folder:
 
-<div class="steps">
+```sh
+stirphp check
+```
 
-<div class="step"><span>01</span><strong>sphp init</strong><p>Creates <code>sphp.toml</code> and a first <code>src/main.sphp</code>.</p></div>
-
-<div class="step"><span>02</span><strong>sphp check</strong><p>Type-checks the project: StirPHP files strictly, your <code>.php</code> files at their PHPStan level.</p></div>
-
-<div class="step"><span>03</span><strong>sphp build</strong><p>Writes plain PHP to <code>build/</code>, with source maps. <code>--watch</code> rebuilds on save.</p></div>
-
-</div>
-
-[More ways to install →](/guide/installation)
+[More ways to install, and VS Code →](/guide/installation)

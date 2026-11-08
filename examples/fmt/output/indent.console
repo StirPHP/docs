@@ -1,0 +1,3 @@
+$ stirphp fmt --indent tab src/Point.php
+src/Point.php
+1 of 1 files changed

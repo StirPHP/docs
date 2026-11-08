@@ -1,0 +1,9 @@
+parameters:
+    stirphp:
+        phpstan:
+            enabled: true                # say so if it can't be found; `false` never runs it, in an editor
+            binary: tools/phpstan.phar   # relative to this file; without the executable bit it's run by `php`
+            configuration: phpstan.ci.neon
+            level: max                   # over the one in the configuration
+            memoryLimit: 1G              # for each of its processes; default 2G, -1 for none
+            timeout: 300                 # seconds for a run; default 600

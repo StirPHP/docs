@@ -7,12 +7,15 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "check:examples": "node scripts/check-examples.mjs"
+    "web": "sh scripts/build-web.sh",
+    "examples": "node scripts/run-examples.mjs",
+    "gen:reference": "node scripts/gen-reference.mjs"
   },
   "devDependencies": {
     "@fontsource/roboto": "5.3.0",
     "@fontsource/roboto-mono": "5.3.0",
     "monaco-editor": "0.57.0",
-    "vitepress": "1.6.4"
+    "vitepress": "1.6.4",
+    "vscode-languageserver-protocol": "3.18.5"
   }
 }
