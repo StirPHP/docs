@@ -1,6 +1,6 @@
 # Frameworks
 
-StirPHP ships support for Laravel, Symfony and WordPress: [scripts](/guide/rules) like a project's own, inside the binary,
+StirPHP ships support for Laravel, Symfony, WordPress, Pest and Mockery: [scripts](/guide/rules) like a project's own, inside the binary,
 with native code where reading many files would be slow in a script. They're part of StirPHP, so they run without anyone
 being asked, in editors too, and they're never read from disk, so no file of a project can stand in for one. A project's
 own scripts come first and can override what they say.
@@ -15,6 +15,8 @@ Each is on when the project uses that framework:
 - **WordPress:** `johnpbloch/wordpress-core`, `roots/wordpress` or `php-stubs/wordpress-stubs`, a `wp-config.php` or
   `wp-content` folder, or a plugin's `Plugin Name:` header in a file in the project's folder (or a theme's
   `Theme Name:` in `style.css`).
+- **Pest:** `pestphp/pest` among Composer's packages.
+- **Mockery:** `mockery/mockery` among Composer's packages.
 
 `parameters.stirphp.frameworks` turns one off or on, over what's found:
 
@@ -40,7 +42,10 @@ After what larastan does:
   contracts such as `Illuminate\Contracts\Auth\Factory` to the class Laravel binds them to. `auth()->user()`,
   `Auth::user()` and `$request->user()` give the user model `config/auth.php` names. Laravel's class aliases, such as
   `\DB`, are there.
-- **Macros** the project adds with `Foo::macro('name', ..)` aren't reported, though what they return isn't known.
+- **Macros** the project or a package adds with `Foo::macro('name', ..)` or `Foo::mixin(..)` aren't reported, though what
+  they return isn't known.
+- **Factories** know their model: `User::factory()->create()` is a `User`, and with `count()` a collection of them. A
+  relation method with no generics in its PHPDoc gets its type from its body.
 - In a closure given to `Artisan::command()` or the console kernel's `command()`, `$this` is the `ClosureCommand` Laravel
   binds it to; not in a static closure, which PHP can't bind.
 - **Blade templates** are read as PHP where they hold PHP, with variables typed from what renders them. See
@@ -94,13 +99,23 @@ A plugin, with a few of WordPress's declarations standing in for `php-stubs/word
 
 Without the stubs installed, WordPress's own functions, such as `add_action()`, are unknown.
 
+## Pest and Mockery
+
+In a Pest test, `$this` is the class `uses()` and `Pest.php` give that test's folder, and `expect()` knows its value. A mock
+of `Foo` from Mockery is a `Foo` as well as a mock.
+
 ## How well it works
 
 With PHPStan and the matching extension at the same level:
 
 - Laravel's framework repository, with no configuration: 8993 reported before this support, 4937 with it. 4074 went, 3577
   of which PHPStan without larastan reports on the same line with the same identifier: calls and properties only Laravel's
-  magic has.
+  magic has. It's 4216 since Mockery's mocks are understood.
+- [laravel.io](https://github.com/laravelio/laravel.io), an MIT-licensed Laravel application with Pest tests and 136
+  templates, at the default level: 1144 reported before factories, relation bodies and Pest were understood, 57 now. We
+  read all 57 and they're the application's own: a `slug()` that `Reply` hasn't got, a `: string` function that can end
+  without returning, tests passing `'<a>'` as `assertSeeText()`'s `$escape`, and contracts missing methods their callers
+  use. PHPStan wasn't run on it, so this one isn't a comparison.
 - [BookStack](https://github.com/BookStackApp/BookStack), an MIT-licensed Laravel application, at its own level 5: 149
   before, 36 now. PHPStan with larastan reports none. What's left isn't about Laravel's magic: argument types the checker
   gets wrong, such as a Collection where an array is taken.

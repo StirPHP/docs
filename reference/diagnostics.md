@@ -2,11 +2,11 @@
 outline: [2, 2]
 ---
 
-<!-- Written by scripts/gen-reference.mjs from StirPHP 0.2.0; don't edit it by hand. -->
+<!-- Written by scripts/gen-reference.mjs from StirPHP 0.3.0; don't edit it by hand. -->
 
 # Diagnostics
 
-Every identifier `stirphp check` and the language server report, from StirPHP 0.2.0's source. Where one of
+Every identifier `stirphp check` and the language server report, from StirPHP 0.3.0's source. Where one of
 PHPStan's rules checks the same thing, the identifier is PHPStan's and links to its page; `SPHP` codes are StirPHP's own.
 
 - **Level** is the lowest [level](/guide/levels) that reports it. Some reports of a code need a higher one: an argument that

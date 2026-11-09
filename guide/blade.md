@@ -92,8 +92,7 @@ In a project without Laravel, a `.blade.php` file gets no errors for names that 
 
 ## Limits
 
-- Some checks are off in templates: conditions that are always true or false, unreachable code, and properties only
-  `__get` knows of.
+- Some checks are off in templates: conditions that are always true or false, and unreachable code.
 - `Auth::user()` and `$request->user()` are taken as not `null`, since an `@auth` or a route's middleware may be in another
   file.
 - Directives a project adds with `Blade::directive` aren't checked.
