@@ -86,6 +86,13 @@ namespace Illuminate\Contracts\View {
     interface View {}
 }
 
+namespace Illuminate\View {
+    abstract class Component
+    {
+        abstract public function render();
+    }
+}
+
 namespace {
     function auth(): \Illuminate\Contracts\Auth\Factory { return new \Illuminate\Auth\AuthManager(); }
     function env(string $key, mixed $default = null): mixed { return $default; }

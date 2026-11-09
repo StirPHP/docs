@@ -1,0 +1,1 @@
+<footer>{{ $total }} posts</footer>

@@ -97,9 +97,12 @@ namespace Illuminate\Support {
     /**
      * @template TKey of array-key
      * @template-covariant TValue
+     * @implements \IteratorAggregate<TKey, TValue>
      */
-    class Collection
+    class Collection implements \IteratorAggregate
     {
+        /** @return \ArrayIterator<TKey, TValue> */
+        public function getIterator(): \ArrayIterator { return new \ArrayIterator([]); }
         /** @return TValue|null */
         public function first() { return null; }
         public function count(): int { return 0; }

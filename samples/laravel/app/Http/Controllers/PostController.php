@@ -11,9 +11,10 @@ final class PostController
 {
     public function index(): View
     {
+        $year = 2025;
         $posts = Post::publishedIn('2025')->orderBy('views')->get();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', compact('posts', 'year'));
     }
 
     public function show(int $id): string

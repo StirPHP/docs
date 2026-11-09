@@ -1,16 +1,23 @@
 $ stirphp check
 error[argument.type]: type mismatch in argument `year` of `publishedIn`: '2025' is not assignable to int
-    ╭─[ app/Http/Controllers/PostController.php:14:36 ]
+    ╭─[ app/Http/Controllers/PostController.php:15:36 ]
     │
- 14 │         $posts = Post::publishedIn('2025')->orderBy('views')->get();
+ 15 │         $posts = Post::publishedIn('2025')->orderBy('views')->get();
     │                                    ───┬──  
     │                                       ╰──── type mismatch in argument `year` of `publishedIn`: '2025' is not assignable to int
 ────╯
 error[argument.type]: type mismatch in argument `views` of `views`: int is not assignable to string
-    ╭─[ app/Http/Controllers/PostController.php:26:82 ]
+    ╭─[ app/Http/Controllers/PostController.php:27:82 ]
     │
- 26 │         return $post->title . ' by ' . $post->author->name . ', ' . $this->views($post->views);
+ 27 │         return $post->title . ' by ' . $post->author->name . ', ' . $this->views($post->views);
     │                                                                                  ──────┬─────  
     │                                                                                        ╰─────── type mismatch in argument `views` of `views`: int is not assignable to string
 ────╯
-2 errors, 0 warnings in 1 file (checked 7 files)
+error[variable.undefined]: undefined variable `$yaer`: what renders this template doesn't give it
+    ╭─[ resources/views/posts/index.blade.php:12:33 ]
+    │
+ 12 │             <li>Nothing from {{ $yaer }} yet.</li>
+    │                                 ──┬──  
+    │                                   ╰──── undefined variable `$yaer`: what renders this template doesn't give it
+────╯
+3 errors, 0 warnings in 2 files (checked 12 files)

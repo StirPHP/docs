@@ -35,8 +35,8 @@ export const SAMPLES: Sample[] = [
     id: 'laravel',
     title: 'Laravel',
     about:
-      'Models, a migration, a scope and a controller. vendor/ has a few of Laravel\'s classes, written for this sample, so the framework support turns on.',
-    open: ['app/Http/Controllers/PostController.php', 'app/Models/Post.php'],
+      'A Blade template typed from its controller, with a component, and the models and migration behind them. vendor/ has a few of Laravel\'s classes, written for this sample, so the framework support turns on.',
+    open: ['resources/views/posts/index.blade.php', 'app/Http/Controllers/PostController.php', 'app/Models/Post.php'],
   },
 ]
 
