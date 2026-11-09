@@ -1,0 +1,37 @@
+$ stirphp check
+error[property.notFound]: `App\Models\Post` has no property `total`
+   ╭─[ resources/views/emails/receipt.blade.php:7:11 ]
+   │
+ 7 │ {{ $post->total }}
+   │           ──┬──  
+   │             ╰──── `App\Models\Post` has no property `total`
+───╯
+error[property.notFound]: `App\Models\Post` has no property `titel`
+   ╭─[ resources/views/posts/show.blade.php:1:15 ]
+   │
+ 1 │ <h1>{{ $post->titel }}</h1>
+   │               ──┬──  
+   │                 ╰──── `App\Models\Post` has no property `titel`
+───╯
+error[variable.undefined]: undefined variable `$subtitle`: what renders this template doesn't give it
+   ╭─[ resources/views/posts/show.blade.php:2:7 ]
+   │
+ 2 │ <p>{{ $subtitle }}</p>
+   │       ────┬────  
+   │           ╰────── undefined variable `$subtitle`: what renders this template doesn't give it
+───╯
+error[arguments.count]: too many arguments to `strlen`: it takes 1
+   ╭─[ resources/views/posts/show.blade.php:3:43 ]
+   │
+ 3 │ <p @class(['long' => strlen($post->title, 2) > 40])>{{ $post->title }}</p>
+   │                                           ┬  
+   │                                           ╰── too many arguments to `strlen`: it takes 1
+───╯
+error[argument.type]: type mismatch in attribute `maxViews` of `<x-view-count>`: App\Models\Post is not assignable to int
+   ╭─[ resources/views/posts/show.blade.php:5:27 ]
+   │
+ 5 │ <x-view-count :max-views="$post" />
+   │                           ──┬──  
+   │                             ╰──── type mismatch in attribute `maxViews` of `<x-view-count>`: App\Models\Post is not assignable to int
+───╯
+5 errors, 0 warnings in 2 files (checked 8 files)

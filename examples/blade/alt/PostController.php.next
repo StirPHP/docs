@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Contracts\View\View;
+
+final class PostController
+{
+    public function index(string $page): View
+    {
+        $post = new Post('Hello', 12);
+
+        return view($page, compact('post'));
+    }
+}

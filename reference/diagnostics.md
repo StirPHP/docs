@@ -110,6 +110,7 @@ Level 1 adds `constant.notFound` and `nullCoalesce.variable`. Without configurat
 | [`throw.notThrowable`](https://phpstan.org/error-identifiers/throw.notThrowable) | 3 | yes |  |
 | [`trait.notFound`](https://phpstan.org/error-identifiers/trait.notFound) | 0 | yes |  |
 | [`typeAlias.notFound`](https://phpstan.org/error-identifiers/typeAlias.notFound) | 0 | yes |  |
+| [`view.notFound`](https://phpstan.org/error-identifiers/view.notFound) | 0 | yes |  |
 | [`variable.undefined`](https://phpstan.org/error-identifiers/variable.undefined) | 0 | yes |  |
 
 ## Newer syntax than the project's PHP version

@@ -107,6 +107,7 @@ function sidebar() {
       text: 'Frameworks and rules',
       items: [
         { text: 'Frameworks', link: '/guide/frameworks' },
+        { text: 'Blade', link: '/guide/blade' },
         { text: 'Rules and hooks', link: '/guide/rules' },
       ],
     },

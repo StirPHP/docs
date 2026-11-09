@@ -43,6 +43,8 @@ After what larastan does:
 - **Macros** the project adds with `Foo::macro('name', ..)` aren't reported, though what they return isn't known.
 - In a closure given to `Artisan::command()` or the console kernel's `command()`, `$this` is the `ClosureCommand` Laravel
   binds it to; not in a static closure, which PHP can't bind.
+- **Blade templates** are read as PHP where they hold PHP, with variables typed from what renders them. See
+  [Blade](/guide/blade).
 - **In an editor**, these complete, hover and lead to where they're declared: a relation's property to its method, a scope
   to its `scopeX` method. Going to the definition of `route('name')` finds `->name('name')` in `routes/`, and of
   `view('a.b')` the template in `resources/views`.
@@ -54,6 +56,8 @@ Laravel's classes, written for it):
 
 <<< @/samples/laravel/app/Http/Controllers/PostController.php{php} [PostController.php]
 
+<<< @/samples/laravel/resources/views/posts/index.blade.php{blade} [posts/index.blade.php]
+
 <<< @/samples/laravel/app/Models/Post.php{php} [Post.php]
 
 <<< @/samples/laravel/database/migrations/2026_01_01_000000_create_posts_table.php{php} [the migration]
@@ -62,7 +66,8 @@ Laravel's classes, written for it):
 
 <<< @/samples/laravel/output/check.console{text}
 
-The scope's parameter and the `views` column's type came from the model and its migration. At level 8, `$post->author`
+The scope's parameter and the `views` column's type came from the model and its migration, and the template's `$posts` from
+the controller. At level 8, `$post->author`
 and `auth()->user()` would be reported as possibly `null`, as they are.
 
 ## Symfony and Doctrine

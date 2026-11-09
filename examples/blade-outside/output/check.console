@@ -1,0 +1,9 @@
+$ stirphp check page.blade.php
+error[arguments.count]: too many arguments to `strlen`: it takes 1
+   ╭─[ page.blade.php:3:16 ]
+   │
+ 3 │ {{ strlen('a', 'b') }}
+   │                ─┬─  
+   │                 ╰─── too many arguments to `strlen`: it takes 1
+───╯
+1 error, 0 warnings in 1 file (checked 1 file)

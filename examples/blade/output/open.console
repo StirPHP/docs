@@ -1,0 +1,16 @@
+$ stirphp check
+error[property.notFound]: `App\Models\Post` has no property `total`
+   ╭─[ resources/views/emails/receipt.blade.php:7:11 ]
+   │
+ 7 │ {{ $post->total }}
+   │           ──┬──  
+   │             ╰──── `App\Models\Post` has no property `total`
+───╯
+error[arguments.count]: too many arguments to `strlen`: it takes 1
+   ╭─[ resources/views/posts/show.blade.php:3:43 ]
+   │
+ 3 │ <p @class(['long' => strlen($post->title, 2) > 40])>{{ $post->title }}</p>
+   │                                           ┬  
+   │                                           ╰── too many arguments to `strlen`: it takes 1
+───╯
+2 errors, 0 warnings in 2 files (checked 8 files)

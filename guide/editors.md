@@ -24,8 +24,8 @@ You can try all of this without installing anything in [the editor on this site]
 
 ## VS Code
 
-The extension starts StirPHP when you open a PHP file, and a Composer project needs no configuration. It needs VS Code
-1.100 or newer. Install the `stirphp-vscode-<version>.vsix` from the
+The extension starts StirPHP when you open a PHP file or a [Blade template](/guide/blade), and a Composer project needs no
+configuration. It needs VS Code 1.100 or newer. Install the `stirphp-vscode-<version>.vsix` from the
 [releases page](https://github.com/StirPHP/core/releases) with **Extensions: Install from VSIX...**, or:
 
 ```sh
@@ -55,6 +55,13 @@ to StirPHP:
 ```
 
 Any other PHP language extension you have enabled also adds its own results.
+
+### Other Blade extensions
+
+The extension adds a `blade` language for `*.blade.php`, with its own grammar. Another Blade extension can stay enabled. If
+it declares the same language, VS Code uses one of the two grammars, by the order extensions load, so the colours may be
+that extension's. StirPHP's diagnostics, hover and completion work either way. If another extension gives `.blade.php` files
+a language of its own, StirPHP still attaches to them once a PHP file has started it.
 
 ### Rules and workspace trust
 

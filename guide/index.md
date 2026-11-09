@@ -15,7 +15,8 @@ afford a licence writing code nothing checks, so type safety has to be free, liv
   stubs, references, rename, inlay hints, and [quick fixes and refactorings](/guide/code-actions).
 - **Reads your project as it is**: [Composer's files](/guide/composer) (it never runs Composer), the
   [PHP version](/guide/php-versions) you target, a `phpstan.neon` if there is one.
-- **Knows frameworks**: [Laravel, Symfony and WordPress](/guide/frameworks), built in.
+- **Knows frameworks**: [Laravel, Symfony and WordPress](/guide/frameworks), built in, and
+  [Blade templates](/guide/blade), with variables typed from what renders them.
 - **Takes your own rules** as [Rhai scripts](/guide/rules), sandboxed.
 - **Formats** code in the style of PER-CS, changing only whitespace: [`stirphp fmt`](/guide/formatter).
 - **Runs in a browser** too, compiled to WebAssembly: [try it here](/editor).

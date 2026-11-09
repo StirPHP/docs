@@ -1,0 +1,7 @@
+{
+  "runs": [
+    { "args": ["check"], "exit": 1, "out": "check.console" },
+    { "copy": { "alt/PostController.php.next": "app/Http/Controllers/PostController.php" } },
+    { "args": ["check"], "exit": 1, "out": "open.console" }
+  ]
+}
