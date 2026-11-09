@@ -102,10 +102,3 @@ open too.
 
 Adding `declare(strict_types=1)`, which isn't reported and changes what the code does; moving a class to the file PSR-4
 says, which would mean creating and renaming files; adding to a baseline; extracting from a closure; and inlining methods.
-
-## How well it works
-
-Measured on Laravel's framework, Symfony and PHPStan's source, at diagnostics and a fixed sample of places and selections
-in 400 files of each: about 5,000 actions applied, every result parsed, and about 25 left a new error in the file, which
-were all the checker seeing the moved code differently rather than the code doing something else. Working out what's
-offered took 0.1 ms at the median and 15 ms at the 95th percentile, and extracting a method 3 to 6 ms.

@@ -3,7 +3,7 @@
 StirPHP is a language server and type checker for PHP. It reads your `.php` files, their PHPDoc and your Composer
 setup as they are, and needs no configuration. It's written in Rust, and the command is `stirphp`.
 
-The goal is the best open source language server for PHP, as good as PhpStorm's engine. Paid tools leave people who can't
+The goal is the best open source language server for PHP. Paid tools leave people who can't
 afford a licence writing code nothing checks, so type safety has to be free, live in the editor, and need no setup.
 
 ## What it does
@@ -26,10 +26,8 @@ It doesn't need PHP installed, and it doesn't run your code. PHPStan, if your pr
 
 ## Current state
 
-This is early, and accuracy against PHPStan is still being improved. On Laravel's framework, Symfony and PHPStan's own
-source, each with its own configuration, it reports about 4900, 1300 and 1300 problems, in about 4 to 6 seconds each. Those
-include false alarms, at a rate nobody has measured overall yet. Reducing them is the current work. If `stirphp check` is
-wrong about your code, please [open an issue](https://github.com/StirPHP/core/issues) with a small example.
+This is early, and StirPHP still reports some false alarms. If `stirphp check` is wrong about your code, please
+[open an issue](https://github.com/StirPHP/core/issues) with a small example.
 
 Not there yet: wrapping long lines when formatting, some of what [frameworks](/guide/frameworks#not-there-yet) need, and
 the checks listed under [PHPStan compatibility](/guide/phpstan#limits).

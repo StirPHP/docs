@@ -90,5 +90,4 @@ too, and `// @stirphp-nocheck` only quiets StirPHP.
 ## How long it takes
 
 On Laravel's framework with its own configuration (level 1), on 16 cores: 6 seconds for a first run, with 17 processes of
-up to 420 MB each, and under a second with PHPStan's result cache when nothing or a little changed. On that project, 1593
-of PHPStan's 2884 errors were removed as duplicates.
+up to 420 MB each, and under a second with PHPStan's result cache when nothing or a little changed.

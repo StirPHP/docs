@@ -35,7 +35,7 @@ strikes it through either way. The [Configuration](/guide/configuration#stirphp-
   phpstan-doctrine and phpstan-wordpress do. For the rest, and for others such as strict rules,
   [run PHPStan alongside](/guide/running-phpstan), or write what a project needs as [rules and hooks](/guide/rules).
 - **The checks don't all exist yet**, and those that exist don't always agree with PHPStan. Conditions and comparisons that
-  can only go one way are reported only where that's certain, so far fewer of them are found. A project with
+  can only go one way are reported only where that's certain, so some are missed. A project with
   `treatPhpDocTypesAsCertain: false` gets none of them, because types here don't say which came from PHPDoc.
 - **Not reported at all:** `missingType.generics`, `missingType.callable` and `missingType.checkedException`.
 - **Messages differ** from PHPStan's, which is why nothing is matched on them.

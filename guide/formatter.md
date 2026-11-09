@@ -35,7 +35,7 @@ stirphp fmt -                # from standard input to standard output
 
 The indentation is 4 spaces unless `parameters.stirphp.indent` or `--indent` says otherwise. In an editor, formatting a
 document or a selection uses the editor's indentation unless the configuration sets one. It isn't configurable beyond
-that, and it isn't PhpStorm-compatible: PER-CS is the style.
+that: PER-CS is the style.
 
 ## How it was tested
 

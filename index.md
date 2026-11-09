@@ -35,7 +35,7 @@ features:
 
 ## Why
 
-The goal is the best open source language server for PHP, as good as PhpStorm's engine. Type safety shouldn't depend on
+The goal is the best open source language server for PHP. Type safety shouldn't depend on
 being able to pay for a licence, and it should work live in the editor. It isn't there yet: see
 [its current state](/guide/#current-state).
 

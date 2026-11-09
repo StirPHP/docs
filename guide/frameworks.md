@@ -28,8 +28,6 @@ With this, the [WordPress plugin below](#wordpress) gets none of its errors:
 
 ## Laravel
 
-After what larastan does:
-
 - **Models** get properties for the columns their migrations in `database/migrations` create (by `$table`, or the class's
   name in plural, as Laravel has it), their `$casts` and `casts()`, accessors (`getFullNameAttribute()` and
   `fullName(): Attribute`) and relations, typed as what the relation gives. They accept anything when set, as Laravel
@@ -77,7 +75,7 @@ and `auth()->user()` would be reported as possibly `null`, as they are.
 
 ## Symfony and Doctrine
 
-After phpstan-symfony and phpstan-doctrine: services and parameters come from the compiled container,
+Services and parameters come from the compiled container,
 `parameters.symfony.containerXmlPath` or else one in `var/cache/`, the `dev` environment's first, so
 `$container->get('app.mailer')` and `$this->getParameter('kernel.debug')` have types. A container that hasn't been
 compiled isn't compiled; then a `get(Foo::class)` is still a `Foo`. `getRepository(Product::class)` gives the repository
@@ -85,7 +83,7 @@ compiled isn't compiled; then a `get(Foo::class)` is still a `Foo`. `getReposito
 
 ## WordPress
 
-After phpstan-wordpress: `php-stubs/wordpress-stubs` is loaded when it's installed, `global $wpdb;` and the other globals
+`php-stubs/wordpress-stubs` is loaded when it's installed, `global $wpdb;` and the other globals
 WordPress sets up have their types, and `add_action()` and `add_filter()` are checked: a callback that isn't a function,
 one that needs more arguments than `$accepted_args`, or takes fewer than it says, and `$accepted_args` above what any
 `do_action()` or `apply_filters()` of that hook in the project passes (`wordpress.hookArguments`). Going to the definition
@@ -103,30 +101,6 @@ Without the stubs installed, WordPress's own functions, such as `add_action()`, 
 
 In a Pest test, `$this` is the class `uses()` and `Pest.php` give that test's folder, and `expect()` knows its value. A mock
 of `Foo` from Mockery is a `Foo` as well as a mock.
-
-## How well it works
-
-With PHPStan and the matching extension at the same level:
-
-- Laravel's framework repository, with no configuration: 8993 reported before this support, 4937 with it. 4074 went, 3577
-  of which PHPStan without larastan reports on the same line with the same identifier: calls and properties only Laravel's
-  magic has. It's 4216 since Mockery's mocks are understood.
-- [laravel.io](https://github.com/laravelio/laravel.io), an MIT-licensed Laravel application with Pest tests and 136
-  templates, at the default level: 1144 reported before factories, relation bodies and Pest were understood, 57 now. We
-  read all 57 and they're the application's own: a `slug()` that `Reply` hasn't got, a `: string` function that can end
-  without returning, tests passing `'<a>'` as `assertSeeText()`'s `$escape`, and contracts missing methods their callers
-  use. PHPStan wasn't run on it, so this one isn't a comparison.
-- [BookStack](https://github.com/BookStackApp/BookStack), an MIT-licensed Laravel application, at its own level 5: 149
-  before, 36 now. PHPStan with larastan reports none. What's left isn't about Laravel's magic: argument types the checker
-  gets wrong, such as a Collection where an array is taken.
-- A new Laravel application with models, relations, scopes, casts and a controller: 20 before, 3 now. Larastan reports 6.
-  Both find the 3 mistakes written in on purpose.
-- A new Symfony application with an entity, its repository and a controller, and a container: 5 before, 1 now, the same as
-  PHPStan's.
-- A WordPress plugin with hooks: none of its 3 mistakes before, all of them now.
-
-On the framework repository a run takes about a fifth more CPU time; on BookStack, Symfony's and PHPStan's repositories
-it's within the noise.
 
 ## Not there yet
 
