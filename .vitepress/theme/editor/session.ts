@@ -58,6 +58,9 @@ export function uriOf(path: string): string {
   return 'file://' + path.split('/').map(encodeURIComponent).join('/')
 }
 
+/** The languages of files the server is told are open, and is asked about. */
+const SERVED = ['php', 'blade']
+
 const SEVERITY: Record<number, Problem['severity']> = { 1: 'error', 2: 'warning', 3: 'info', 4: 'hint' }
 
 export class Session {
@@ -156,13 +159,14 @@ export class Session {
   /** The document is shown: it's open for the server, which then has the editor's text. */
   opened(model: Monaco.editor.ITextModel): void {
     const uri = model.uri.toString()
-    if (this.open.has(uri) || this.isStub(model.uri) || model.getLanguageId() !== 'php') return
+    const language = model.getLanguageId()
+    if (this.open.has(uri) || this.isStub(model.uri) || !SERVED.includes(language)) return
     this.open.set(uri, model.getVersionId())
     const path = pathOf(uri)!
     // what's waiting for it would come after, and win
     delete this.pending[path]
     this.connection.sendNotification('textDocument/didOpen', {
-      textDocument: { uri, languageId: 'php', version: model.getVersionId(), text: model.getValue() },
+      textDocument: { uri, languageId: language, version: model.getVersionId(), text: model.getValue() },
     })
   }
 
@@ -381,7 +385,6 @@ export class Session {
   private register(): void {
     const caps = this.capabilities
     const L = monaco.languages
-    const php = 'php'
     const d = this.disposables
 
     d.push(
@@ -401,7 +404,7 @@ export class Session {
     )
 
     d.push(
-      L.registerHoverProvider(php, {
+      L.registerHoverProvider(SERVED, {
         provideHover: async (model, position, token) => {
           const h = await this.request<L.Hover>('textDocument/hover', this.params(model, position), token)
           if (!h) return null
@@ -413,7 +416,7 @@ export class Session {
     const completion = caps.completionProvider
     if (completion) {
       d.push(
-        L.registerCompletionItemProvider(php, {
+        L.registerCompletionItemProvider(SERVED, {
           triggerCharacters: completion.triggerCharacters,
           provideCompletionItems: async (model, position, context, token) => {
             const r = await this.request<L.CompletionList | L.CompletionItem[]>(
@@ -442,7 +445,7 @@ export class Session {
 
     if (caps.signatureHelpProvider) {
       d.push(
-        L.registerSignatureHelpProvider(php, {
+        L.registerSignatureHelpProvider(SERVED, {
           signatureHelpTriggerCharacters: caps.signatureHelpProvider.triggerCharacters,
           signatureHelpRetriggerCharacters: caps.signatureHelpProvider.retriggerCharacters,
           provideSignatureHelp: async (model, position, token) => {
@@ -468,13 +471,13 @@ export class Session {
 
     const nav = (method: string) => async (model: Monaco.editor.ITextModel, position: Monaco.Position, token: Monaco.CancellationToken) =>
       this.locations(await this.request(method, this.params(model, position), token))
-    if (caps.definitionProvider) d.push(L.registerDefinitionProvider(php, { provideDefinition: nav('textDocument/definition') }))
-    if (caps.typeDefinitionProvider) d.push(L.registerTypeDefinitionProvider(php, { provideTypeDefinition: nav('textDocument/typeDefinition') }))
-    if (caps.implementationProvider) d.push(L.registerImplementationProvider(php, { provideImplementation: nav('textDocument/implementation') }))
-    if (caps.declarationProvider) d.push(L.registerDeclarationProvider(php, { provideDeclaration: nav('textDocument/declaration') }))
+    if (caps.definitionProvider) d.push(L.registerDefinitionProvider(SERVED, { provideDefinition: nav('textDocument/definition') }))
+    if (caps.typeDefinitionProvider) d.push(L.registerTypeDefinitionProvider(SERVED, { provideTypeDefinition: nav('textDocument/typeDefinition') }))
+    if (caps.implementationProvider) d.push(L.registerImplementationProvider(SERVED, { provideImplementation: nav('textDocument/implementation') }))
+    if (caps.declarationProvider) d.push(L.registerDeclarationProvider(SERVED, { provideDeclaration: nav('textDocument/declaration') }))
     if (caps.referencesProvider) {
       d.push(
-        L.registerReferenceProvider(php, {
+        L.registerReferenceProvider(SERVED, {
           provideReferences: async (model, position, context, token) =>
             this.locations(
               await this.request('textDocument/references', { ...this.params(model, position), context }, token),
@@ -484,7 +487,7 @@ export class Session {
     }
     if (caps.documentHighlightProvider) {
       d.push(
-        L.registerDocumentHighlightProvider(php, {
+        L.registerDocumentHighlightProvider(SERVED, {
           provideDocumentHighlights: async (model, position, token) => {
             const r = await this.request<L.DocumentHighlight[]>('textDocument/documentHighlight', this.params(model, position), token)
             return (r ?? []).map((h) => ({ range: monacoRange(h.range), kind: (h.kind ?? 1) - 1 }))
@@ -495,7 +498,7 @@ export class Session {
 
     if (caps.renameProvider) {
       d.push(
-        L.registerRenameProvider(php, {
+        L.registerRenameProvider(SERVED, {
           provideRenameEdits: async (model, position, newName, token) => {
             const edit = await this.request<L.WorkspaceEdit>('textDocument/rename', { ...this.params(model, position), newName }, token)
             const converted = await this.workspaceEdit(edit ?? undefined)
@@ -525,7 +528,7 @@ export class Session {
     })
     if (caps.documentFormattingProvider) {
       d.push(
-        L.registerDocumentFormattingEditProvider(php, {
+        L.registerDocumentFormattingEditProvider(SERVED, {
           provideDocumentFormattingEdits: async (model, options, token) => {
             const r = await this.request<L.TextEdit[]>(
               'textDocument/formatting',
@@ -539,7 +542,7 @@ export class Session {
     }
     if (caps.documentRangeFormattingProvider) {
       d.push(
-        L.registerDocumentRangeFormattingEditProvider(php, {
+        L.registerDocumentRangeFormattingEditProvider(SERVED, {
           provideDocumentRangeFormattingEdits: async (model, range, options, token) => {
             const r = await this.request<L.TextEdit[]>(
               'textDocument/rangeFormatting',
@@ -556,7 +559,7 @@ export class Session {
       const kinds = typeof caps.codeActionProvider === 'object' ? caps.codeActionProvider.codeActionKinds : undefined
       d.push(
         L.registerCodeActionProvider(
-          php,
+          SERVED,
           {
             provideCodeActions: async (model, range, context, token) => {
               const uri = model.uri.toString()
@@ -660,7 +663,7 @@ export class Session {
 
     if (caps.inlayHintProvider) {
       d.push(
-        L.registerInlayHintsProvider(php, {
+        L.registerInlayHintsProvider(SERVED, {
           onDidChangeInlayHints: this.inlayChanged.event,
           provideInlayHints: async (model, range, token) => {
             const r = await this.request<L.InlayHint[]>(
@@ -687,7 +690,7 @@ export class Session {
     const tokens = caps.semanticTokensProvider
     if (tokens) {
       d.push(
-        L.registerDocumentSemanticTokensProvider(php, {
+        L.registerDocumentSemanticTokensProvider(SERVED, {
           onDidChange: this.tokensChanged.event,
           getLegend: () => tokens.legend,
           provideDocumentSemanticTokens: async (model, _lastResultId, token) => {
@@ -705,7 +708,7 @@ export class Session {
 
     if (caps.documentSymbolProvider) {
       d.push(
-        L.registerDocumentSymbolProvider(php, {
+        L.registerDocumentSymbolProvider(SERVED, {
           provideDocumentSymbols: async (model, token) => {
             const r = await this.request<L.DocumentSymbol[] | L.SymbolInformation[]>(
               'textDocument/documentSymbol',
@@ -719,7 +722,7 @@ export class Session {
     }
     if (caps.foldingRangeProvider) {
       d.push(
-        L.registerFoldingRangeProvider(php, {
+        L.registerFoldingRangeProvider(SERVED, {
           provideFoldingRanges: async (model, _context, token) => {
             const r = await this.request<L.FoldingRange[]>('textDocument/foldingRange', { textDocument: { uri: model.uri.toString() } }, token)
             return (r ?? []).map((f) => ({
@@ -733,7 +736,7 @@ export class Session {
     }
     if (caps.selectionRangeProvider) {
       d.push(
-        L.registerSelectionRangeProvider(php, {
+        L.registerSelectionRangeProvider(SERVED, {
           provideSelectionRanges: async (model, positions, token) => {
             const r = await this.request<L.SelectionRange[]>(
               'textDocument/selectionRange',

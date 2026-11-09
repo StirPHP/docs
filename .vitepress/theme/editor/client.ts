@@ -14,8 +14,8 @@ export type { Problem, SessionEvents }
 function defineThemes(): void {
   const rules = (dark: boolean): Monaco.editor.ITokenThemeRule[] => {
     const c = dark
-      ? { type: 'ffa657', fn: 'd2a8ff', prop: '79c0ff', kw: 'ff7b72', comment: '8b949e', str: 'a5d6ff', num: '79c0ff', ns: 'd2a8ff', v: 'e6edf3', param: 'ffa198' }
-      : { type: '953800', fn: '8250df', prop: '0550ae', kw: 'cf222e', comment: '6e7781', str: '0a3069', num: '0550ae', ns: '6639ba', v: '1f2328', param: '953800' }
+      ? { type: 'ffa657', fn: 'd2a8ff', prop: '79c0ff', kw: 'ff7b72', comment: '8b949e', str: 'a5d6ff', num: '79c0ff', ns: 'd2a8ff', v: 'e6edf3', param: 'ffa198', tag: '7ee787' }
+      : { type: '953800', fn: '8250df', prop: '0550ae', kw: 'cf222e', comment: '6e7781', str: '0a3069', num: '0550ae', ns: '6639ba', v: '1f2328', param: '953800', tag: '116329' }
     return [
       // what the server marks: its legend's types, and `type.modifier`
       { token: 'namespace', foreground: c.ns },
@@ -42,6 +42,18 @@ function defineThemes(): void {
       { token: 'comment.php', foreground: c.comment, fontStyle: 'italic' },
       { token: 'number.php', foreground: c.num },
       { token: 'metatag.php', foreground: c.kw },
+      // Blade's, and the HTML around it
+      { token: 'keyword.blade', foreground: c.kw },
+      { token: 'delimiter.blade', foreground: c.kw },
+      { token: 'comment.blade', foreground: c.comment, fontStyle: 'italic' },
+      { token: 'string.blade', foreground: c.str },
+      { token: 'comment.html', foreground: c.comment, fontStyle: 'italic' },
+      { token: 'metatag.html', foreground: c.comment },
+      { token: 'delimiter.html', foreground: c.comment },
+      { token: 'tag', foreground: c.tag },
+      { token: 'tag.component', foreground: c.type },
+      { token: 'attribute.name', foreground: c.prop },
+      { token: 'attribute.value', foreground: c.str },
     ]
   }
   monaco.editor.defineTheme('stir-light', {
